@@ -6,11 +6,9 @@ import com.etiya.rentACar.business.responses.brandResponses.ListBrandDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.BrandDao;
 import com.etiya.rentACar.entities.concretes.Brand;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,13 +29,13 @@ public class BrandManager implements BrandService {
     public void add(CreateBrandRequest createBrandRequest) {
 
 
-        createBrandRequest.setName(createBrandRequest.getName().toUpperCase());
+        createBrandRequest.setName(translateLetter(createBrandRequest.getName().toUpperCase()));
         if (!this.brandDao.existsBrandByName(createBrandRequest.getName().toUpperCase())) {
             Brand brand = modelMapperService.forRequest()
                     .map(createBrandRequest, Brand.class);
             this.brandDao.save(brand);
         } else {
-            throw new RuntimeException("Bu marka var");
+            throw new RuntimeException("This brand already exist.");
 
         }
     }
@@ -50,6 +48,20 @@ public class BrandManager implements BrandService {
         List<ListBrandDto> response = brands.stream()
                 .map(brand -> modelMapperService.forDto().map(brand, ListBrandDto.class))
                 .collect(Collectors.toList());
+        return response;
+    }
+
+
+    public String translateLetter(String name) {
+        String word = name;
+        String response = "";
+        char[] oldLetter = new char[]{'İ', 'ı', 'ü', 'Ü', 'ç', 'Ç', 'Ğ', 'ğ', 'Ş', 'ş', 'ö', 'Ö'};
+        char[] newLetter = new char[]{'I', 'i', 'u', 'U', 'c', 'C', 'G', 'g', 'S', 's', 'o', 'O',};
+
+        for (int i = 0; i < oldLetter.length; i++) {
+            word = word.replace(oldLetter[i], newLetter[i]);
+        }
+        response = word;
         return response;
     }
 

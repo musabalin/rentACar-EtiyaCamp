@@ -10,6 +10,7 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,8 +31,10 @@ public class BrandManager implements BrandService {
     public void add(CreateBrandRequest createBrandRequest) {
 
 
-        if (!this.brandDao.existsBrandByName(createBrandRequest.getName())) {
-            Brand brand = modelMapperService.forRequest().map(createBrandRequest, Brand.class);
+        createBrandRequest.setName(createBrandRequest.getName().toUpperCase());
+        if (!this.brandDao.existsBrandByName(createBrandRequest.getName().toUpperCase())) {
+            Brand brand = modelMapperService.forRequest()
+                    .map(createBrandRequest, Brand.class);
             this.brandDao.save(brand);
         } else {
             throw new RuntimeException("Bu marka var");

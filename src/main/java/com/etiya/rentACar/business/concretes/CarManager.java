@@ -5,9 +5,10 @@ import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.CarDao;
-import com.etiya.rentACar.entities.concretes.Brand;
 import com.etiya.rentACar.entities.concretes.Car;
-import com.etiya.rentACar.entities.concretes.Color;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +38,35 @@ public class CarManager implements CarService {
     public List<ListCarDto> getAll() {
 
         List<Car> cars = carDao.findAll();
+        List<ListCarDto> response = cars.stream()
+                .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
+                .collect(Collectors.toList());
+        return response;
+    }
+
+    @Override
+    public List<ListCarDto> getByModelYear(short modelYear) {
+        List<Car> cars = carDao.getByModelYear(modelYear);
+        List<ListCarDto> response = cars.stream()
+                .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
+                .collect(Collectors.toList());
+        return response;
+    }
+
+    @Override
+    public List<ListCarDto> getAllPaged(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);//domain
+        List<Car> cars = this.carDao.findAll(pageable).getContent();
+        List<ListCarDto> response = cars.stream()
+                .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
+                .collect(Collectors.toList());
+        return response;
+    }
+
+    @Override
+    public List<ListCarDto> getAllSorted() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "modelYear");
+        List<Car> cars = this.carDao.findAll(sort);
         List<ListCarDto> response = cars.stream()
                 .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
                 .collect(Collectors.toList());

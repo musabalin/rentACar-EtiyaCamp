@@ -31,8 +31,8 @@ public class DamagesController {
         return this.damageService.getAll();
     }
 
-    @GetMapping("/{id}")
-    public List<ListDamageDto> getById(int id) {
+    @GetMapping("getbycarid/{id}")
+    public List<ListDamageDto> getCarById(int id) {
         return this.damageService.getByCarId(id);
     }
 

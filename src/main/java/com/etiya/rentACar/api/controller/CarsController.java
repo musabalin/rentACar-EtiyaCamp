@@ -21,9 +21,22 @@ public class CarsController {
     public void add(@RequestBody CreateCarRequest carRequest) {
         carService.add(carRequest);
     }
+
     @GetMapping("getall")
-    public List<ListCarDto> getAll(){
+    public List<ListCarDto> getAll() {
         return carService.getAll();
+    }
+
+    @GetMapping("/getbymodelyear")
+    // @GetMapping("/getmodelyear/{id}")
+    public List<ListCarDto> getByModelYear(@RequestParam("modelYear") short modelYear) {
+        //  public List<ListCarDto> getByModelYear ( short modelYear){
+        return carService.getByModelYear(modelYear);
+    }
+
+    @GetMapping("/getallpaged")
+    List<ListCarDto> getAllPaged(@RequestParam("pageNo")int pageNo, @RequestParam("pageSize")int pageSize) {
+        return carService.getAllPaged(pageNo, pageSize);
     }
 
 

@@ -1,5 +1,6 @@
 package com.etiya.rentACar.business.requests.carRequests;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCarRequest {
+
+    @JsonIgnore
+    private int carId;
 
     private double dailyPrice;
     private String description;

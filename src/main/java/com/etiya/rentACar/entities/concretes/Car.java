@@ -22,8 +22,10 @@ public class Car {
 
     @Column(name = "dailyPrice")
     private double dailyPrice;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "modelYear")
     private short modelYear;
 

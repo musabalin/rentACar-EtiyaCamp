@@ -9,4 +9,7 @@ public interface CarService {
 
     void add(CreateCarRequest createCarRequest);
     List<ListCarDto> getAll();
+    List<ListCarDto> getByModelYear(short modelYear);
+    List<ListCarDto> getAllPaged(int pageNo,int pageSize);
+    List<ListCarDto> getAllSorted();
 }

@@ -7,6 +7,9 @@ import com.etiya.rentACar.core.utilities.ModelMapperManager;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.DamageDao;
 import com.etiya.rentACar.entities.concretes.Damage;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +29,7 @@ public class DamageManager implements DamageService {
 
     @Override
     public void add(CreateDamageRequest createDamageRequest) {
+
 
         Damage damage = modelMapperService.forRequest()
                 .map(createDamageRequest, Damage.class);
@@ -49,13 +53,33 @@ public class DamageManager implements DamageService {
                 .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
                 .filter(listDamageDto -> listDamageDto.getCarId()==id)
                 .collect(Collectors.toList());
-
         */
         List<Damage> damages = this.damageDao.getByCarId(id);
         List<ListDamageDto> response = damages.stream().map(damage -> this.modelMapperService.forDto()
-                        .map(damage,ListDamageDto.class))
+                        .map(damage, ListDamageDto.class))
                 .collect(Collectors.toList());
 
+
+        return response;
+    }
+
+    @Override
+    public List<ListDamageDto> getAllPaged(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Damage> damages = damageDao.findAll(pageable).getContent();
+        List<ListDamageDto> response = damages.stream()
+                .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
+                .collect(Collectors.toList());
+        return response;
+    }
+
+    @Override
+    public List<ListDamageDto> getAllSorted(String option, String field) {
+        Sort sort = Sort.by(Sort.Direction.valueOf(option), field);
+        List<Damage> damages = damageDao.findAll(sort);
+        List<ListDamageDto> response = damages.stream()
+                .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
+                .collect(Collectors.toList());
         return response;
     }
 }

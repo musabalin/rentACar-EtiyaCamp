@@ -39,5 +39,10 @@ public class CarsController {
         return carService.getAllPaged(pageNo, pageSize);
     }
 
+    @GetMapping("/getallsorted")
+    List<ListCarDto> getAllSorted(){
+        return this.carService.getAllSorted();
+    }
+
 
 }

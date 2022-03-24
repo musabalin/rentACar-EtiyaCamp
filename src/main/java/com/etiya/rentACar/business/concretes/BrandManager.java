@@ -18,7 +18,9 @@ public class BrandManager implements BrandService {
     private BrandDao brandDao;
     private ModelMapperService modelMapperService;
 
+
     public BrandManager(BrandDao brandDao, ModelMapperService modelMapperService) {
+
         this.brandDao = brandDao;
         this.modelMapperService = modelMapperService;
     }
@@ -26,11 +28,17 @@ public class BrandManager implements BrandService {
 
     @Override
     public void add(CreateBrandRequest createBrandRequest) {
-        Brand brand = modelMapperService.forRequest().map(createBrandRequest, Brand.class);
 
-        this.brandDao.save(brand);
 
+        if (!this.brandDao.existsBrandByName(createBrandRequest.getName())) {
+            Brand brand = modelMapperService.forRequest().map(createBrandRequest, Brand.class);
+            this.brandDao.save(brand);
+        } else {
+            throw new RuntimeException("Bu marka var");
+
+        }
     }
+
 
     @Override
     public List<ListBrandDto> getAll() {
@@ -39,7 +47,8 @@ public class BrandManager implements BrandService {
         List<ListBrandDto> response = brands.stream()
                 .map(brand -> modelMapperService.forDto().map(brand, ListBrandDto.class))
                 .collect(Collectors.toList());
-
         return response;
     }
+
+
 }

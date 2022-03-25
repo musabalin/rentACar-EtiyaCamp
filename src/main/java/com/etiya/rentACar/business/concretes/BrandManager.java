@@ -3,6 +3,7 @@ package com.etiya.rentACar.business.concretes;
 import com.etiya.rentACar.business.abstracts.BrandService;
 import com.etiya.rentACar.business.requests.brandRequests.CreateBrandRequest;
 import com.etiya.rentACar.business.responses.brandResponses.ListBrandDto;
+import com.etiya.rentACar.core.utilities.ConvertLetter;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.BrandDao;
 import com.etiya.rentACar.entities.concretes.Brand;
@@ -29,7 +30,7 @@ public class BrandManager implements BrandService {
     public void add(CreateBrandRequest createBrandRequest) {
 
 
-        createBrandRequest.setName(translateLetter(createBrandRequest.getName().toUpperCase()));
+        createBrandRequest.setName(ConvertLetter.convertLetter(createBrandRequest.getName().toUpperCase()));
         if (!this.brandDao.existsBrandByName(createBrandRequest.getName().toUpperCase())) {
             Brand brand = modelMapperService.forRequest()
                     .map(createBrandRequest, Brand.class);
@@ -48,20 +49,6 @@ public class BrandManager implements BrandService {
         List<ListBrandDto> response = brands.stream()
                 .map(brand -> modelMapperService.forDto().map(brand, ListBrandDto.class))
                 .collect(Collectors.toList());
-        return response;
-    }
-
-
-    public String translateLetter(String name) {
-        String word = name;
-        String response = "";
-        char[] oldLetter = new char[]{'İ', 'ı', 'ü', 'Ü', 'ç', 'Ç', 'Ğ', 'ğ', 'Ş', 'ş', 'ö', 'Ö'};
-        char[] newLetter = new char[]{'I', 'i', 'u', 'U', 'c', 'C', 'G', 'g', 'S', 's', 'o', 'O',};
-
-        for (int i = 0; i < oldLetter.length; i++) {
-            word = word.replace(oldLetter[i], newLetter[i]);
-        }
-        response = word;
         return response;
     }
 

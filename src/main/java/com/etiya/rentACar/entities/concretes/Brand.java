@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @AllArgsConstructor

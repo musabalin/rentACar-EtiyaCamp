@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ColorDao extends JpaRepository<Color, Integer> {
 
-    Boolean existsByName(String name);
+    Boolean existsByNameIgnoreCase(String name);
 
 }

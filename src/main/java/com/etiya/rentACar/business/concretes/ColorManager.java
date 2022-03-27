@@ -3,7 +3,7 @@ package com.etiya.rentACar.business.concretes;
 import com.etiya.rentACar.business.abstracts.ColorService;
 import com.etiya.rentACar.business.requests.colorRequests.CreateColorRequest;
 import com.etiya.rentACar.business.responses.colorResponse.ListColorDto;
-import com.etiya.rentACar.core.utilities.ConvertLetter;
+import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.ColorDao;
 import com.etiya.rentACar.entities.concretes.Color;
@@ -25,14 +25,10 @@ public class ColorManager implements ColorService {
     @Override
     public void add(CreateColorRequest createColorRequest) {
 
+        checkIfIsColorName(createColorRequest.getName());
+        Color color = modelMapperService.forRequest().map(createColorRequest, Color.class);
+        colorDao.save(color);
 
-        createColorRequest.setName(ConvertLetter.convertLetter(createColorRequest.getName()).toUpperCase());
-        if (!colorDao.existsByName(createColorRequest.getName())) {
-            Color color = modelMapperService.forRequest().map(createColorRequest, Color.class);
-            colorDao.save(color);
-        } else {
-            throw new RuntimeException("This color already exists.");
-        }
 
     }
 
@@ -44,4 +40,13 @@ public class ColorManager implements ColorService {
                 .collect(Collectors.toList());
         return response;
     }
+
+    private void checkIfIsColorName(String colorName) {
+
+        if (this.colorDao.existsByNameIgnoreCase(colorName)) {
+            throw new BusinessException("This color already exist.");
+        }
+
+    }
+
 }

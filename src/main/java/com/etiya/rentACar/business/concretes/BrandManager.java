@@ -3,7 +3,6 @@ package com.etiya.rentACar.business.concretes;
 import com.etiya.rentACar.business.abstracts.BrandService;
 import com.etiya.rentACar.business.requests.brandRequests.CreateBrandRequest;
 import com.etiya.rentACar.business.responses.brandResponses.ListBrandDto;
-import com.etiya.rentACar.core.utilities.ConvertLetter;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.BrandDao;
 import com.etiya.rentACar.entities.concretes.Brand;
@@ -30,15 +29,12 @@ public class BrandManager implements BrandService {
     public void add(CreateBrandRequest createBrandRequest) {
 
 
-        createBrandRequest.setName(ConvertLetter.convertLetter(createBrandRequest.getName().toUpperCase()));
-        if (!this.brandDao.existsBrandByName(createBrandRequest.getName().toUpperCase())) {
-            Brand brand = modelMapperService.forRequest()
-                    .map(createBrandRequest, Brand.class);
-            this.brandDao.save(brand);
-        } else {
-            throw new RuntimeException("This brand already exist.");
-
-        }
+        /*String colorName = ConvertLetter.convertLetter(createBrandRequest.getName().toUpperCase());
+        createBrandRequest.setName(colorName);*/
+        checkIfIsBrandName(createBrandRequest.getName());
+        Brand brand = modelMapperService.forRequest()
+                .map(createBrandRequest, Brand.class);
+        this.brandDao.save(brand);
     }
 
 
@@ -50,6 +46,14 @@ public class BrandManager implements BrandService {
                 .map(brand -> modelMapperService.forDto().map(brand, ListBrandDto.class))
                 .collect(Collectors.toList());
         return response;
+    }
+
+   private void checkIfIsBrandName(String brandName) {
+
+        if (this.brandDao.existsBrandByNameIgnoreCase(brandName)) {
+            throw new RuntimeException("This brand already exist.");
+        }
+
     }
 
 

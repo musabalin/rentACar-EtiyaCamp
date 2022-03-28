@@ -1,6 +1,6 @@
 package com.etiya.rentACar.business.responses.maintenanceResponses;
 
-import com.etiya.rentACar.entities.concretes.Durum;
+import com.etiya.rentACar.entities.concretes.CarState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +14,5 @@ public class ListMaintenanceDto {
     private String carDescription;
     private String dateAdded;
     private String dateReturned;
-    private String statusName;
-    private Durum durum;
+    private CarState carState;
 }

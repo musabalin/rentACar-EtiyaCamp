@@ -3,9 +3,7 @@ package com.etiya.rentACar.api.controller;
 import com.etiya.rentACar.business.abstracts.MaintenanceService;
 import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
-import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
-import com.etiya.rentACar.entities.concretes.Durum;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,13 +21,14 @@ public class MaintenancesController {
 
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateMaintenanceRequest createMaintenanceRequest,@RequestParam Durum durum) {
-        maintenanceService.add(createMaintenanceRequest,durum);
+    public void add(@RequestBody CreateMaintenanceRequest createMaintenanceRequest) {
+
+        maintenanceService.add(createMaintenanceRequest);
     }
 
-    @PostMapping("/update")
-    public void update(@RequestBody UpdateMaintenanceRequest updateMaintenanceRequest, @RequestParam Durum durum) {
-        maintenanceService.update(updateMaintenanceRequest, durum);
+    @PutMapping("/update")
+    public void update(@RequestBody UpdateMaintenanceRequest updateMaintenanceRequest) {
+        maintenanceService.update(updateMaintenanceRequest);
     }
 /*
     @GetMapping("/getByCarId")
@@ -45,11 +44,6 @@ public class MaintenancesController {
     @GetMapping("/getall")
     public List<ListMaintenanceDto> getAll() {
         return maintenanceService.getAll();
-    }
-
-    @GetMapping("/getalldurum")
-    public List<ListMaintenanceDto> getAll(@RequestParam Durum durum) {
-        return maintenanceService.getAllDurum(durum);
     }
 
 

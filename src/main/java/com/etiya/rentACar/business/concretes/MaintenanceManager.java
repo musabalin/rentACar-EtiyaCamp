@@ -1,12 +1,16 @@
 package com.etiya.rentACar.business.concretes;
 
+import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.abstracts.MaintenanceService;
+import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
+import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.MaintenanceDao;
-import com.etiya.rentACar.entities.concretes.Durum;
+import com.etiya.rentACar.entities.concretes.CarState;
 import com.etiya.rentACar.entities.concretes.Maintenance;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +22,27 @@ public class MaintenanceManager implements MaintenanceService {
 
     MaintenanceDao maintenanceDao;
     ModelMapperService modelMapperService;
+    CarService carService;
 
-    public MaintenanceManager(MaintenanceDao maintenanceDao, ModelMapperService modelMapperService) {
+    public MaintenanceManager(MaintenanceDao maintenanceDao, ModelMapperService modelMapperService, CarService carService) {
         this.maintenanceDao = maintenanceDao;
         this.modelMapperService = modelMapperService;
+        this.carService = carService;
     }
 
     @Override
-    public void add(CreateMaintenanceRequest createMaintenanceRequest, Durum durum) {
+    public void add(CreateMaintenanceRequest createMaintenanceRequest) {
 
-        checkIfCarId(createMaintenanceRequest.getCarId(), durum);
+        checkIfCarId(createMaintenanceRequest.getCarId());
         Maintenance maintenance = modelMapperService.forRequest()
                 .map(createMaintenanceRequest, Maintenance.class);
         maintenanceDao.save(maintenance);
+        ListCarDto car1 = carService.getByCarId(createMaintenanceRequest.getCarId());
+        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(car1, UpdateStatusRequest.class);
+
+        carService.updateMaintenanceStatus(updateStatusRequest.getCarId());
+
+
     }
 
 
@@ -38,16 +50,6 @@ public class MaintenanceManager implements MaintenanceService {
     public List<ListMaintenanceDto> getAll() {
         List<Maintenance> maintenances = this.maintenanceDao.findAll();
         List<ListMaintenanceDto> response = maintenances.stream()
-                .map(maintenance -> modelMapperService.forDto().map(maintenance, ListMaintenanceDto.class))
-                .collect(Collectors.toList());
-        return response;
-    }
-
-    @Override
-    public List<ListMaintenanceDto> getAllDurum(Durum durum) {
-        List<Maintenance> maintenances = this.maintenanceDao.findAll();
-        List<ListMaintenanceDto> response = maintenances.stream()
-                .filter(lista -> lista.getDurum() == durum)
                 .map(maintenance -> modelMapperService.forDto().map(maintenance, ListMaintenanceDto.class))
                 .collect(Collectors.toList());
         return response;
@@ -63,7 +65,7 @@ public class MaintenanceManager implements MaintenanceService {
                 .collect(Collectors.toList());
         return response;
     }
-
+/*
     @Override
     public void update(UpdateMaintenanceRequest updateMaintenanceRequest, Durum durum) {
 
@@ -76,12 +78,24 @@ public class MaintenanceManager implements MaintenanceService {
         maintenance.setDurum(durum);
         maintenanceDao.save(maintenance);
 
+    }*/
+
+    @Override
+    public void update(UpdateMaintenanceRequest updateMaintenanceRequest) {
+
+        List<Maintenance> maintenance1 = maintenanceDao.getByMaintenanceId(updateMaintenanceRequest.getMaintenanceId());
+        Maintenance maintenance = modelMapperService.forRequest()
+                .map(maintenance1, Maintenance.class);
+
+        maintenance.setDateAdded(maintenance.getDateAdded());
+        maintenance.setMaintenanceId(updateMaintenanceRequest.getMaintenanceId());
+        maintenanceDao.save(maintenance);
+
     }
 
 
-    private void checkIfCarId(int car_id, Durum durum) {
-        if (maintenanceDao.existsMaintenanceByCarId(car_id) && durum == Durum.Available) {
-
+    private void checkIfCarId(int car_id) {
+        if (maintenanceDao.existsMaintenanceByCarId(car_id)) {
             throw new RuntimeException("Bu araç bakımda");
         }
     }

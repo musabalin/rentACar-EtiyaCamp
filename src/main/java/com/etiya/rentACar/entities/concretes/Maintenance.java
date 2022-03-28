@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -22,13 +23,16 @@ public class Maintenance {
     private Car car;
 
     @Column(name = "dateAdded")
-    private String dateAdded;
+    private LocalDate dateAdded;
 
     @Column(name = "dateReturned")
-    private String dateReturned;
+    private LocalDate dateReturned;
 
-    @Column(name="durum")
-    private Durum durum;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "status_id")
+    private CarState status;
 
 
 }

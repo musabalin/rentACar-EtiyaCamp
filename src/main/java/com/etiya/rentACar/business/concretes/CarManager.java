@@ -2,11 +2,14 @@ package com.etiya.rentACar.business.concretes;
 
 import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.CarDao;
 import com.etiya.rentACar.entities.concretes.Car;
+import com.etiya.rentACar.entities.concretes.CarState;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -35,6 +38,29 @@ public class CarManager implements CarService {
         Car car = modelMapperService.forRequest().map(createCarRequest, Car.class);
         this.carDao.save(car);
 
+    }
+
+    @Override
+    public void update(UpdateCarRequest carRequest, int id) {
+        Car car = carDao.getById(id);
+
+        Car car1 = modelMapperService.forDto().map(carRequest, Car.class);
+        car.setModelYear(car1.getModelYear());
+        car.setColor(car1.getColor());
+        car.setBrand(car1.getBrand());
+        car.setDescription(car1.getDescription());
+        car.setDailyPrice(car1.getDailyPrice());
+        car.setStatus(car1.getStatus());
+
+
+        carDao.save(car);
+    }
+
+    @Override
+    public void updateMaintenanceStatus(int id) {
+        Car car = carDao.getById(id);
+        car.setStatus(CarState.Maintenance);
+        carDao.save(car);
     }
 
     @Override
@@ -74,6 +100,13 @@ public class CarManager implements CarService {
                 .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
                 .collect(Collectors.toList());
         return response;
+    }
+
+    @Override
+    public ListCarDto getByCarId(int id) {
+        Car car = carDao.getById(id);
+        ListCarDto car1 = this.modelMapperService.forDto().map(car, ListCarDto.class);
+        return car1;
     }
 }
 

@@ -2,6 +2,7 @@ package com.etiya.rentACar.api.controller;
 
 import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,13 +35,20 @@ public class CarsController {
         return carService.getByModelYear(modelYear);
     }
 
+
+    @PutMapping("/update")
+    public void Update(@RequestBody UpdateCarRequest updateCarRequest, @RequestParam int id) {
+        carService.update(updateCarRequest, id);
+    }
+
+
     @GetMapping("/getallpaged")
-    List<ListCarDto> getAllPaged(@RequestParam("pageNo")int pageNo, @RequestParam("pageSize")int pageSize) {
+    List<ListCarDto> getAllPaged(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
         return carService.getAllPaged(pageNo, pageSize);
     }
 
     @GetMapping("/getallsorted")
-    List<ListCarDto> getAllSorted(){
+    List<ListCarDto> getAllSorted() {
         return this.carService.getAllSorted();
     }
 

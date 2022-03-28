@@ -1,6 +1,7 @@
 package com.etiya.rentACar.entities.concretes;
 
-public enum Durum {
+public enum CarState {
+
     Available,
     Maintenance
 }

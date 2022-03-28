@@ -1,6 +1,5 @@
 package com.etiya.rentACar.dataAccess.abstracts;
 
-import com.etiya.rentACar.entities.concretes.Durum;
 import com.etiya.rentACar.entities.concretes.Maintenance;
 import org.springframework.data.jpa.repository.JpaRepository;
 

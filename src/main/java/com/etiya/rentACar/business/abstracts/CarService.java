@@ -1,6 +1,7 @@
 package com.etiya.rentACar.business.abstracts;
 
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
@@ -14,6 +15,8 @@ public interface CarService {
     void add(CreateCarRequest createCarRequest);
 
     void update(UpdateCarRequest carRequest);
+
+    void delete(DeleteCarRequest carRequest);
 
     void updateMaintenanceStatus(int id);
 

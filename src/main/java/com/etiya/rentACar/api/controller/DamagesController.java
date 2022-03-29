@@ -1,7 +1,10 @@
 package com.etiya.rentACar.api.controller;
 
 import com.etiya.rentACar.business.abstracts.DamageService;
+import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.requests.damageRequests.CreateCarDamageRequest;
+import com.etiya.rentACar.business.requests.damageRequests.DeleteCarDamageRequest;
 import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +21,18 @@ public class DamagesController {
     }
 
     @PostMapping("/add")
-    public void add(CreateCarDamageRequest createDamageRequest) {
+    public void add(@RequestBody CreateCarDamageRequest createDamageRequest) {
         carDamageService.add(createDamageRequest);
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody DeleteCarDamageRequest carDamageRequest) {
+        carDamageService.delete(carDamageRequest);
+    }
+
+    @PutMapping("/update")
+    public void update(@RequestBody UpdateCarRequest updateCarRequest) {
+        carDamageService.update(updateCarRequest);
     }
 
     @GetMapping("/getall")
@@ -33,13 +46,13 @@ public class DamagesController {
     }
 
     @GetMapping("/getallpaged")
-    public List<ListDamageDto> getAllPaged(@RequestParam int pageNo,@RequestParam int pageSize) {
+    public List<ListDamageDto> getAllPaged(@RequestParam int pageNo, @RequestParam int pageSize) {
         return carDamageService.getAllPaged(pageNo, pageSize);
     }
 
     @GetMapping("/getallsorted")
-    public List<ListDamageDto> getAllSorted(@RequestParam String optinal, @RequestParam String field){
-        return carDamageService.getAllSorted(optinal,field);
+    public List<ListDamageDto> getAllSorted(@RequestParam String optinal, @RequestParam String field) {
+        return carDamageService.getAllSorted(optinal, field);
     }
 
 

@@ -2,6 +2,7 @@ package com.etiya.rentACar.api.controller;
 
 import com.etiya.rentACar.business.abstracts.MaintenanceService;
 import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanceRequest;
+import com.etiya.rentACar.business.requests.maintananceRequests.DeleteMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,11 @@ public class MaintenancesController {
     @GetMapping("/getall")
     public List<ListMaintenanceDto> getAll() {
         return maintenanceService.getAll();
+    }
+
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody DeleteMaintenanceRequest deleteMaintenanceRequest) {
+        maintenanceService.delete(deleteMaintenanceRequest);
     }
 
 

@@ -2,6 +2,7 @@ package com.etiya.rentACar.business.concretes;
 
 import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
@@ -59,6 +60,11 @@ public class CarManager implements CarService {
         car.setDailyPrice(car1.getDailyPrice());
         car.setCarState(car1.getCarState());
         carDao.save(car);*/
+    }
+
+    @Override
+    public void delete(DeleteCarRequest carRequest) {
+        this.carDao.deleteById(carRequest.getCarId());
     }
 
     @Override

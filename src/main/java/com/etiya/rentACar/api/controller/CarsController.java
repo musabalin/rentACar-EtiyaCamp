@@ -2,6 +2,7 @@ package com.etiya.rentACar.api.controller;
 
 import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.entities.concretes.CarStates;
@@ -24,6 +25,10 @@ public class CarsController {
         carService.add(carRequest);
     }
 
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody DeleteCarRequest deleteCarRequest){
+        carService.delete(deleteCarRequest);
+    }
     @GetMapping("getall")
     public List<ListCarDto> getAll() {
         return carService.getAll();

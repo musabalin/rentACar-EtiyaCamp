@@ -1,24 +1,16 @@
 package com.etiya.rentACar.business.concretes;
 
 import com.etiya.rentACar.business.abstracts.CarService;
-import com.etiya.rentACar.business.abstracts.DamageService;
 import com.etiya.rentACar.business.abstracts.MaintenanceService;
 import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.DeleteMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
-import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
-import com.etiya.rentACar.core.utilities.ModelMapperManager;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
-import com.etiya.rentACar.dataAccess.abstracts.DamageDao;
 import com.etiya.rentACar.dataAccess.abstracts.MaintenanceDao;
-import com.etiya.rentACar.entities.concretes.Damage;
 import com.etiya.rentACar.entities.concretes.Maintenance;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,9 +37,7 @@ public class MaintenanceManager implements MaintenanceService {
                 .map(createMaintenanceRequest, Maintenance.class);
         maintenanceDao.save(maintenance);
 
-
-        ListCarDto car1 = carService.getByCarId(createMaintenanceRequest.getCarId());
-        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(car1, UpdateStatusRequest.class);
+        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(maintenance, UpdateStatusRequest.class);
 
         carService.updateMaintenanceStatus(updateStatusRequest.getCarId());
 

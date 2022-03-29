@@ -1,7 +1,5 @@
 package com.etiya.rentACar.business.requests.maintananceRequests;
 
-import com.etiya.rentACar.entities.concretes.CarStates;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

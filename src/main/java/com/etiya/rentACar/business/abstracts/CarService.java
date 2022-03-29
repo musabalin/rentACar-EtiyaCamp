@@ -5,7 +5,6 @@ import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
-import com.etiya.rentACar.entities.concretes.Car;
 import com.etiya.rentACar.entities.concretes.CarStates;
 
 import java.util.List;

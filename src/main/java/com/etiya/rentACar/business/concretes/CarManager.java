@@ -51,7 +51,6 @@ public class CarManager implements CarService {
 
         /*
         Car car = carDao.getById(id);
-
         Car car1 = modelMapperService.forDto().map(carRequest, Car.class);
         car.setModelYear(car1.getModelYear());
         car.setColor(car1.getColor());

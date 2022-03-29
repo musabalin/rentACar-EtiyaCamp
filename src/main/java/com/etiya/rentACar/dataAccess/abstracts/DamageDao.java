@@ -1,6 +1,6 @@
 package com.etiya.rentACar.dataAccess.abstracts;
 
-import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
+
 import com.etiya.rentACar.entities.concretes.Damage;
 import org.springframework.data.jpa.repository.JpaRepository;
 

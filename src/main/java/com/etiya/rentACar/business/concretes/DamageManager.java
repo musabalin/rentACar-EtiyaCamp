@@ -9,7 +9,6 @@ import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
 import com.etiya.rentACar.core.utilities.ModelMapperManager;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.dataAccess.abstracts.DamageDao;
-import com.etiya.rentACar.entities.concretes.Car;
 import com.etiya.rentACar.entities.concretes.Damage;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

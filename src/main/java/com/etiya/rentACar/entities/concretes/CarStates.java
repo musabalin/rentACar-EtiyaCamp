@@ -1,7 +1,9 @@
 package com.etiya.rentACar.entities.concretes;
 
-public enum CarState {
+public enum CarStates {
 
     Available,
-    Maintenance
+    UnderMaintenance,
+    Rented
+
 }

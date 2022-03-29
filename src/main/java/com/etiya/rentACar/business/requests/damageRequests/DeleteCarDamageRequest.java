@@ -1,4 +1,4 @@
-package com.etiya.rentACar.business.requests.statusRequests;
+package com.etiya.rentACar.business.requests.damageRequests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateStatusRequest {
+public class DeleteCarDamageRequest {
 
-    private String name;
+    private int damageId;
 }

@@ -1,6 +1,6 @@
 package com.etiya.rentACar.business.responses.carResponses;
 
-import com.etiya.rentACar.entities.concretes.CarState;
+import com.etiya.rentACar.entities.concretes.CarStates;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,8 @@ public class ListCarDto {
 
     private String colorName;
     private String brandName;
-    private CarState carStatus;
+
+    private CarStates status;
 
 
 }

@@ -1,6 +1,6 @@
 package com.etiya.rentACar.business.requests.carRequests;
 
-import com.etiya.rentACar.entities.concretes.CarState;
+import com.etiya.rentACar.entities.concretes.CarStates;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +18,5 @@ public class CreateCarRequest {
     private short modelYear;
     private int colorId;
     private int brandId;
-    private CarState statusName;
+    private CarStates statusName;
 }

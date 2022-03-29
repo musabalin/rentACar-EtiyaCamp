@@ -9,6 +9,4 @@ public interface BrandDao extends JpaRepository<Brand, Integer> {
 
     Boolean existsBrandByNameIgnoreCase(String name);
 
-
-
 }

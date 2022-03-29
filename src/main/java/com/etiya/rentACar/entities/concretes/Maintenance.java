@@ -18,21 +18,19 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int maintenanceId;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
-
     @Column(name = "dateAdded")
     private LocalDate dateAdded;
 
     @Column(name = "dateReturned")
     private LocalDate dateReturned;
 
-    @Column(name = "description")
+    @Column(name="description")
     private String description;
 
-    @Column(name = "status_id")
-    private CarState status;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
 
 
 }

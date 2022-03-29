@@ -1,47 +1,45 @@
 package com.etiya.rentACar.api.controller;
 
 import com.etiya.rentACar.business.abstracts.DamageService;
-import com.etiya.rentACar.business.requests.damageRequests.CreateDamageRequest;
-import com.etiya.rentACar.business.responses.colorResponse.ListColorDto;
+import com.etiya.rentACar.business.requests.damageRequests.CreateCarDamageRequest;
 import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.GeneratedValue;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/damages")
 public class DamagesController {
 
-    DamageService damageService;
+    DamageService carDamageService;
 
-    public DamagesController(DamageService damageService) {
-        this.damageService = damageService;
+    public DamagesController(DamageService carDamageService) {
+        this.carDamageService = carDamageService;
     }
 
     @PostMapping("/add")
-    public void add(CreateDamageRequest createDamageRequest) {
-        damageService.add(createDamageRequest);
+    public void add(CreateCarDamageRequest createDamageRequest) {
+        carDamageService.add(createDamageRequest);
     }
 
     @GetMapping("/getall")
     public List<ListDamageDto> getAll() {
-        return this.damageService.getAll();
+        return this.carDamageService.getAll();
     }
 
     @GetMapping("getbycarid/{id}")
     public List<ListDamageDto> getCarById(int id) {
-        return this.damageService.getByCarId(id);
+        return this.carDamageService.getByCarId(id);
     }
 
     @GetMapping("/getallpaged")
     public List<ListDamageDto> getAllPaged(@RequestParam int pageNo,@RequestParam int pageSize) {
-        return damageService.getAllPaged(pageNo, pageSize);
+        return carDamageService.getAllPaged(pageNo, pageSize);
     }
 
     @GetMapping("/getallsorted")
     public List<ListDamageDto> getAllSorted(@RequestParam String optinal, @RequestParam String field){
-        return damageService.getAllSorted(optinal,field);
+        return carDamageService.getAllSorted(optinal,field);
     }
 
 

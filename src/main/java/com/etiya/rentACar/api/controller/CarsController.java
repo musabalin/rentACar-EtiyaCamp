@@ -4,6 +4,7 @@ import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
+import com.etiya.rentACar.entities.concretes.CarStates;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,12 @@ public class CarsController {
         return carService.getAll();
     }
 
+    @GetMapping("/getallstatus")
+    List<ListCarDto> getAllStatus(@RequestParam CarStates carStates) {
+        return this.carService.getAllStatus(carStates);
+    }
+
+
     @GetMapping("/getbymodelyear")
     // @GetMapping("/getmodelyear/{id}")
     public List<ListCarDto> getByModelYear(@RequestParam("modelYear") short modelYear) {
@@ -37,8 +44,8 @@ public class CarsController {
 
 
     @PutMapping("/update")
-    public void Update(@RequestBody UpdateCarRequest updateCarRequest, @RequestParam int id) {
-        carService.update(updateCarRequest, id);
+    public void Update(@RequestBody UpdateCarRequest updateCarRequest) {
+        carService.update(updateCarRequest);
     }
 
 

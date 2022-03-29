@@ -43,8 +43,8 @@ public class Car {
     @OneToMany(mappedBy = "car")
     List<Maintenance> maintenances;
 
-    @Column(name="status_id")
-    private CarState status;
+    @Column(name = "status_id")
+    private CarStates status;
 
 
 }

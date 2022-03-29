@@ -1,7 +1,6 @@
-package com.etiya.rentACar.business.requests.carRequests;
+package com.etiya.rentACar.business.responses.carResponses;
 
 import com.etiya.rentACar.entities.concretes.CarStates;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +8,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateCarRequest {
+public class CarDto {
 
     private int carId;
     private double dailyPrice;
     private String description;
     private short modelYear;
-    private int colorId;
-    private int brandId;
-    private CarStates statusName;
+
+    private String colorName;
+    private String brandName;
+
+    private CarStates status;
+
 }

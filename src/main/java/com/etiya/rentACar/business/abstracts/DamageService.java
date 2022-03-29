@@ -1,13 +1,22 @@
 package com.etiya.rentACar.business.abstracts;
 
-import com.etiya.rentACar.business.requests.damageRequests.CreateDamageRequest;
+import com.etiya.rentACar.business.requests.damageRequests.CreateCarDamageRequest;
+import com.etiya.rentACar.business.requests.damageRequests.DeleteCarDamageRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
+import com.etiya.rentACar.business.responses.damageReponses.CarDamageDto;
 import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
 
 import java.util.List;
 
 public interface DamageService {
 
-    void add(CreateDamageRequest createDamageRequest);
+    CarDamageDto getById(int id);
+
+    void add(CreateCarDamageRequest createDamageRequest);
+
+    void update(UpdateCarRequest updateCarRequest);
+
+    void delete(DeleteCarDamageRequest deleteCarDamageRequest);
 
     List<ListDamageDto> getAll();
 
@@ -15,7 +24,7 @@ public interface DamageService {
 
     List<ListDamageDto> getAllPaged(int pageNo, int pageSize);
 
-    List<ListDamageDto> getAllSorted(String option,String field);
+    List<ListDamageDto> getAllSorted(String option, String field);
 
 
 }

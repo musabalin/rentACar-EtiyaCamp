@@ -1,20 +1,22 @@
-package com.etiya.rentACar.business.responses.damageReponses;
+package com.etiya.rentACar.business.requests.damageRequests;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListDamageDto {
+public class CreateCarDamageRequest {
 
+    @JsonIgnore
     private int damageId;
     private int carId;
-    private String carDescription;
     private LocalDate date;
     private String description;
+
 }

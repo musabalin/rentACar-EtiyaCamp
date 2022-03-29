@@ -1,6 +1,6 @@
 package com.etiya.rentACar.business.requests.maintananceRequests;
 
-import com.etiya.rentACar.entities.concretes.CarState;
+import com.etiya.rentACar.entities.concretes.CarStates;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,14 +16,11 @@ public class CreateMaintenanceRequest {
 
     @JsonIgnore
     private int maintenanceId;
-
     private LocalDate dateAdded;
-
+    private LocalDate dateReturned;
     private String description;
-
+    private String carDescription;
     private int carId;
-
-    private CarState statusName;
 
 
 }

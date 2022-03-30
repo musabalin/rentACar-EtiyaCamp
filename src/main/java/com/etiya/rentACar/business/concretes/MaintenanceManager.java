@@ -9,6 +9,7 @@ import com.etiya.rentACar.business.requests.maintananceRequests.DeleteMaintenanc
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
+import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
@@ -91,7 +92,7 @@ public class MaintenanceManager implements MaintenanceService {
     private void checkIfCarId(int car_id) {
         CarDto car1 = carService.getById(car_id);
         if (car1.getStatus() == CarStates.UnderMaintenance) {
-            throw new RuntimeException(BusinessMessages.MaintenanceMessages.CAR_UNDERMAINTENANCE);
+            throw new BusinessException(BusinessMessages.MaintenanceMessages.CAR_UNDERMAINTENANCE);
         }
     }
 

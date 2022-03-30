@@ -38,10 +38,13 @@ public class Car {
     private Brand brand;
 
     @OneToMany(mappedBy = "car")
-    List<Damage> damages;
+    private List<Damage> damages;
 
     @OneToMany(mappedBy = "car")
-    List<Maintenance> maintenances;
+    private List<Maintenance> maintenances;
+
+    @OneToMany(mappedBy = "car")
+    private List<Rental> rentals;
 
     @Column(name = "status_id")
     private CarStates status;

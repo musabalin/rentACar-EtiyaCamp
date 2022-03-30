@@ -3,6 +3,7 @@ package com.etiya.rentACar.api.controller;
 import com.etiya.rentACar.business.abstracts.ColorService;
 import com.etiya.rentACar.business.requests.colorRequests.CreateColorRequest;
 import com.etiya.rentACar.business.responses.colorResponse.ListColorDto;
+import com.etiya.rentACar.core.utilities.results.DataResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +24,9 @@ public class ColorsController {
     }
 
     @GetMapping("getall")
-    public List<ListColorDto> getall(){
+    public DataResult<List<ListColorDto>> getall() {
         return colorService.getAll();
     }
-
 
 
 }

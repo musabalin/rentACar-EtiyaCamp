@@ -4,6 +4,7 @@ import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
@@ -74,9 +75,9 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public Result updateMaintenanceStatus(int id) {
-        Car car = carDao.getById(id);
-        car.setStatus(CarStates.UnderMaintenance);
+    public Result updateCarStatus(UpdateStatusRequest updateStatusRequest) {
+        Car car = carDao.getById(updateStatusRequest.getCarId());
+        car.setStatus(updateStatusRequest.getStatusName());
         carDao.save(car);
         return new SuccessResult();
     }

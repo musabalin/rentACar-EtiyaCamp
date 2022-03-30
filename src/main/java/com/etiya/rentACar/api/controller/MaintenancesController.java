@@ -5,6 +5,8 @@ import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanc
 import com.etiya.rentACar.business.requests.maintananceRequests.DeleteMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
+import com.etiya.rentACar.core.utilities.results.DataResult;
+import com.etiya.rentACar.core.utilities.results.Result;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +24,14 @@ public class MaintenancesController {
 
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateMaintenanceRequest createMaintenanceRequest) {
+    public Result add(@RequestBody CreateMaintenanceRequest createMaintenanceRequest) {
 
-        maintenanceService.add(createMaintenanceRequest);
+        return maintenanceService.add(createMaintenanceRequest);
     }
 
     @PutMapping("/update")
-    public void update(@RequestBody UpdateMaintenanceRequest updateMaintenanceRequest) {
-        maintenanceService.update(updateMaintenanceRequest);
+    public Result update(@RequestBody UpdateMaintenanceRequest updateMaintenanceRequest) {
+        return maintenanceService.update(updateMaintenanceRequest);
     }
 /*
     @GetMapping("/getByCarId")
@@ -38,12 +40,12 @@ public class MaintenancesController {
     }*/
 
     @GetMapping("/getbycarid/{id}")
-    public List<ListMaintenanceDto> getCarById(int id) {
+    public DataResult<List<ListMaintenanceDto>> getCarById(int id) {
         return this.maintenanceService.getByCarId(id);
     }
 
     @GetMapping("/getall")
-    public List<ListMaintenanceDto> getAll() {
+    public DataResult<List<ListMaintenanceDto>> getAll() {
         return maintenanceService.getAll();
     }
 

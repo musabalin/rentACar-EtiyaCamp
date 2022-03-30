@@ -3,6 +3,7 @@ package com.etiya.rentACar.business.abstracts;
 import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.core.utilities.results.DataResult;
@@ -19,7 +20,7 @@ public interface CarService {
 
     Result delete(DeleteCarRequest carRequest);
 
-    Result updateMaintenanceStatus(int id);
+    Result updateCarStatus(UpdateStatusRequest updateStatusRequest);
 
     CarDto getById(int id);
 

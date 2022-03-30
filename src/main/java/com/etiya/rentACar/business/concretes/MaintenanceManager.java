@@ -8,7 +8,6 @@ import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanc
 import com.etiya.rentACar.business.requests.maintananceRequests.DeleteMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
-import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
@@ -16,7 +15,6 @@ import com.etiya.rentACar.core.utilities.results.Result;
 import com.etiya.rentACar.core.utilities.results.SuccessDataResult;
 import com.etiya.rentACar.core.utilities.results.SuccessResult;
 import com.etiya.rentACar.dataAccess.abstracts.MaintenanceDao;
-import com.etiya.rentACar.entities.concretes.Car;
 import com.etiya.rentACar.entities.concretes.CarStates;
 import com.etiya.rentACar.entities.concretes.Maintenance;
 import org.springframework.stereotype.Service;
@@ -47,7 +45,8 @@ public class MaintenanceManager implements MaintenanceService {
 
         UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(maintenance, UpdateStatusRequest.class);
 
-        carService.updateMaintenanceStatus(updateStatusRequest.getCarId());
+        updateStatusRequest.setStatusName(CarStates.UnderMaintenance);
+        carService.updateCarStatus(updateStatusRequest);
         return new SuccessResult();
 
 

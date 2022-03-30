@@ -5,6 +5,10 @@ import com.etiya.rentACar.business.requests.colorRequests.CreateColorRequest;
 import com.etiya.rentACar.business.responses.colorResponse.ListColorDto;
 import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
+import com.etiya.rentACar.core.utilities.results.DataResult;
+import com.etiya.rentACar.core.utilities.results.Result;
+import com.etiya.rentACar.core.utilities.results.SuccessDataResult;
+import com.etiya.rentACar.core.utilities.results.SuccessResult;
 import com.etiya.rentACar.dataAccess.abstracts.ColorDao;
 import com.etiya.rentACar.entities.concretes.Color;
 import org.springframework.stereotype.Service;
@@ -23,22 +27,23 @@ public class ColorManager implements ColorService {
     }
 
     @Override
-    public void add(CreateColorRequest createColorRequest) {
+    public Result add(CreateColorRequest createColorRequest) {
 
         checkIfIsColorName(createColorRequest.getName());
         Color color = modelMapperService.forRequest().map(createColorRequest, Color.class);
         colorDao.save(color);
+        return new SuccessResult();
 
 
     }
 
     @Override
-    public List<ListColorDto> getAll() {
+    public DataResult<List<ListColorDto>> getAll() {
         List<Color> colors = colorDao.findAll();
         List<ListColorDto> response = colors.stream()
                 .map(color -> modelMapperService.forDto().map(color, ListColorDto.class))
                 .collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<List<ListColorDto>>();
     }
 
     private void checkIfIsColorName(String colorName) {

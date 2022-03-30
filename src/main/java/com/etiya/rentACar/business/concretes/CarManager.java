@@ -8,6 +8,10 @@ import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
+import com.etiya.rentACar.core.utilities.results.DataResult;
+import com.etiya.rentACar.core.utilities.results.Result;
+import com.etiya.rentACar.core.utilities.results.SuccessDataResult;
+import com.etiya.rentACar.core.utilities.results.SuccessResult;
 import com.etiya.rentACar.dataAccess.abstracts.CarDao;
 import com.etiya.rentACar.entities.concretes.Car;
 import com.etiya.rentACar.entities.concretes.CarStates;
@@ -31,22 +35,24 @@ public class CarManager implements CarService {
 
 
     @Override
-    public void add(CreateCarRequest createCarRequest) {
+    public Result add(CreateCarRequest createCarRequest) {
         if (createCarRequest.getDailyPrice() < 50) {
             throw new BusinessException("Fiyat 50 TL'den küçük olamaz");
         }
 
         Car car = modelMapperService.forRequest().map(createCarRequest, Car.class);
         this.carDao.save(car);
+        return new SuccessResult();
 
     }
 
     @Override
-    public void update(UpdateCarRequest carRequest) {
+    public Result update(UpdateCarRequest carRequest) {
 
 
         Car car = this.modelMapperService.forRequest().map(carRequest, Car.class);
         this.carDao.save(car);
+        return new SuccessResult();
 
 
         /*
@@ -62,15 +68,17 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public void delete(DeleteCarRequest carRequest) {
+    public Result delete(DeleteCarRequest carRequest) {
         this.carDao.deleteById(carRequest.getCarId());
+        return new SuccessResult();
     }
 
     @Override
-    public void updateMaintenanceStatus(int id) {
+    public Result updateMaintenanceStatus(int id) {
         Car car = carDao.getById(id);
         car.setStatus(CarStates.UnderMaintenance);
         carDao.save(car);
+        return new SuccessResult();
     }
 
     @Override
@@ -91,42 +99,42 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public List<ListCarDto> getAll() {
-
+    public DataResult<List<ListCarDto>> getAll() {
         List<Car> cars = carDao.findAll();
         List<ListCarDto> response = cars.stream()
                 .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
                 .collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<List<ListCarDto>>(response);
     }
 
+
     @Override
-    public List<ListCarDto> getByModelYear(short modelYear) {
+    public DataResult<List<ListCarDto>> getByModelYear(short modelYear) {
         List<Car> cars = carDao.getByModelYear(modelYear);
         List<ListCarDto> response = cars.stream()
                 .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
                 .collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<List<ListCarDto>>(response);
     }
 
     @Override
-    public List<ListCarDto> getAllPaged(int pageNo, int pageSize) {
+    public DataResult<List<ListCarDto>> getAllPaged(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);//domain
         List<Car> cars = this.carDao.findAll(pageable).getContent();
         List<ListCarDto> response = cars.stream()
                 .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
                 .collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<List<ListCarDto>>(response);
     }
 
     @Override
-    public List<ListCarDto> getAllSorted() {
+    public DataResult<List<ListCarDto>> getAllSorted() {
         Sort sort = Sort.by(Sort.Direction.DESC, "modelYear");
         List<Car> cars = this.carDao.findAll(sort);
         List<ListCarDto> response = cars.stream()
                 .map(car -> modelMapperService.forDto().map(car, ListCarDto.class))
                 .collect(Collectors.toList());
-        return response;
+        return new SuccessDataResult<List<ListCarDto>>(response);
     }
 
     @Override

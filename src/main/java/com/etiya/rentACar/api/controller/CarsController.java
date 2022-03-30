@@ -5,9 +5,12 @@ import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
+import com.etiya.rentACar.core.utilities.results.DataResult;
+import com.etiya.rentACar.core.utilities.results.Result;
 import com.etiya.rentACar.entities.concretes.CarStates;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,16 +24,17 @@ public class CarsController {
 
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateCarRequest carRequest) {
-        carService.add(carRequest);
+    public Result add(@RequestBody @Valid CreateCarRequest carRequest) {
+        return carService.add(carRequest);
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody DeleteCarRequest deleteCarRequest){
-        carService.delete(deleteCarRequest);
+    public Result delete(@RequestBody DeleteCarRequest deleteCarRequest) {
+        return carService.delete(deleteCarRequest);
     }
+
     @GetMapping("getall")
-    public List<ListCarDto> getAll() {
+    public DataResult<List<ListCarDto>> getAll() {
         return carService.getAll();
     }
 
@@ -42,25 +46,25 @@ public class CarsController {
 
     @GetMapping("/getbymodelyear")
     // @GetMapping("/getmodelyear/{id}")
-    public List<ListCarDto> getByModelYear(@RequestParam("modelYear") short modelYear) {
+    public DataResult<List<ListCarDto>> getByModelYear(@RequestParam("modelYear") short modelYear) {
         //  public List<ListCarDto> getByModelYear ( short modelYear){
         return carService.getByModelYear(modelYear);
     }
 
 
     @PutMapping("/update")
-    public void Update(@RequestBody UpdateCarRequest updateCarRequest) {
-        carService.update(updateCarRequest);
+    public Result Update(@RequestBody UpdateCarRequest updateCarRequest) {
+        return carService.update(updateCarRequest);
     }
 
 
     @GetMapping("/getallpaged")
-    List<ListCarDto> getAllPaged(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
+    public DataResult<List<ListCarDto>> getAllPaged(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
         return carService.getAllPaged(pageNo, pageSize);
     }
 
     @GetMapping("/getallsorted")
-    List<ListCarDto> getAllSorted() {
+    public DataResult<List<ListCarDto>> getAllSorted() {
         return this.carService.getAllSorted();
     }
 

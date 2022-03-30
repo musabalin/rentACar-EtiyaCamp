@@ -1,10 +1,12 @@
 package com.etiya.rentACar.business.abstracts;
 
-import com.etiya.rentACar.business.requests.damageRequests.CreateCarDamageRequest;
-import com.etiya.rentACar.business.requests.damageRequests.DeleteCarDamageRequest;
-import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
+import com.etiya.rentACar.business.requests.damageRequests.CreateDamageRequest;
+import com.etiya.rentACar.business.requests.damageRequests.DeleteDamageRequest;
+import com.etiya.rentACar.business.requests.damageRequests.UpdateDamageRequest;
 import com.etiya.rentACar.business.responses.damageReponses.CarDamageDto;
 import com.etiya.rentACar.business.responses.damageReponses.ListDamageDto;
+import com.etiya.rentACar.core.utilities.results.DataResult;
+import com.etiya.rentACar.core.utilities.results.Result;
 
 import java.util.List;
 
@@ -12,19 +14,19 @@ public interface DamageService {
 
     CarDamageDto getById(int id);
 
-    void add(CreateCarDamageRequest createDamageRequest);
+    Result add(CreateDamageRequest createDamageRequest);
 
-    void update(UpdateCarRequest updateCarRequest);
+    Result update(UpdateDamageRequest updateCarDamageRequest);
 
-    void delete(DeleteCarDamageRequest deleteCarDamageRequest);
+    Result delete(DeleteDamageRequest deleteCarDamageRequest);
 
-    List<ListDamageDto> getAll();
+    DataResult<List<ListDamageDto>> getAll();
 
-    List<ListDamageDto> getByCarId(int id);
+    DataResult< List<ListDamageDto> >getByCarId(int id);
 
-    List<ListDamageDto> getAllPaged(int pageNo, int pageSize);
+    DataResult<  List<ListDamageDto> >getAllPaged(int pageNo, int pageSize);
 
-    List<ListDamageDto> getAllSorted(String option, String field);
+    DataResult<List<ListDamageDto>> getAllSorted(String option, String field);
 
 
 }

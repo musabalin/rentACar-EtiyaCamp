@@ -4,20 +4,22 @@ import com.etiya.rentACar.business.requests.maintananceRequests.CreateMaintenanc
 import com.etiya.rentACar.business.requests.maintananceRequests.DeleteMaintenanceRequest;
 import com.etiya.rentACar.business.requests.maintananceRequests.UpdateMaintenanceRequest;
 import com.etiya.rentACar.business.responses.maintenanceResponses.ListMaintenanceDto;
+import com.etiya.rentACar.core.utilities.results.DataResult;
+import com.etiya.rentACar.core.utilities.results.Result;
 
 import java.util.List;
 
 public interface MaintenanceService {
 
-    void add(CreateMaintenanceRequest createMaintenanceRequest);
+    Result add(CreateMaintenanceRequest createMaintenanceRequest);
 
-    void update(UpdateMaintenanceRequest updateMaintenanceRequest);
+    Result update(UpdateMaintenanceRequest updateMaintenanceRequest);
 
-    void delete(DeleteMaintenanceRequest deleteMaintenanceRequest);
+    Result delete(DeleteMaintenanceRequest deleteMaintenanceRequest);
 
-    List<ListMaintenanceDto> getAll();
+    DataResult<List<ListMaintenanceDto>> getAll();
 
-    List<ListMaintenanceDto> getByCarId(int id);
+    DataResult<List<ListMaintenanceDto>> getByCarId(int id);
 
 
 }

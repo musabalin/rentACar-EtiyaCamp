@@ -1,4 +1,4 @@
-package com.etiya.rentACar.business.requests.carRequests;
+package com.etiya.rentACar.business.responses.additionalService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteCarRequest {
+public class AdditionalServiceDto {
+
+
     private int id;
+    private String name;
+    private double price;
 }

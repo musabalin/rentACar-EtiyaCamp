@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class CreateCarRequest {
 
     @JsonIgnore
-    private int carId;
+    private int id;
 
     @NotNull
     @Min(1)
@@ -31,6 +31,8 @@ public class CreateCarRequest {
     private int colorId;
     @NotNull
     private int brandId;
+
+    private int cityId;
     @NotNull
     private CarStates statusName;
 }

@@ -45,7 +45,7 @@ public class RentACarApplication {
     @ExceptionHandler
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorDataResult<Object> handleBusinessException(BusinessException businessException) {
-        ErrorDataResult<Object> errorResults = new ErrorDataResult<>(businessException.getMessage(), "Validate.Error");
+        ErrorDataResult<Object> errorResults = new ErrorDataResult<>(businessException.getMessage(), "Business.Error()");
         return errorResults;
     }
 }

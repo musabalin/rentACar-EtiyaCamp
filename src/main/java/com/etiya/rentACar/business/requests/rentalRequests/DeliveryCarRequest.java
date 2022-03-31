@@ -23,4 +23,10 @@ public class DeliveryCarRequest {
 
     private int customerId;
 
+    private int rentCity;
+
+    private int returnCity;
+
+    private int additionalServiceId;
+
 }

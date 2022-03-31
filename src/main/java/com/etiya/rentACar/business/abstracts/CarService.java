@@ -1,9 +1,6 @@
 package com.etiya.rentACar.business.abstracts;
 
-import com.etiya.rentACar.business.requests.carRequests.CreateCarRequest;
-import com.etiya.rentACar.business.requests.carRequests.DeleteCarRequest;
-import com.etiya.rentACar.business.requests.carRequests.UpdateCarRequest;
-import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
+import com.etiya.rentACar.business.requests.carRequests.*;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
 import com.etiya.rentACar.core.utilities.results.DataResult;
@@ -22,11 +19,17 @@ public interface CarService {
 
     Result updateCarStatus(UpdateStatusRequest updateStatusRequest);
 
-    CarDto getById(int id);
+    Result updateCity(UpdateCarCityRequest updateCarCityRequest);
+
+    CarDto getById(int carId);
 
     List<ListCarDto> getAllStatus(CarStates carStates);
 
     DataResult<List<ListCarDto>> getAll();
+
+
+    DataResult<List<ListCarDto>> getByCityId(int cityId);
+
 
     DataResult<List<ListCarDto>> getByModelYear(short modelYear);
 
@@ -34,5 +37,5 @@ public interface CarService {
 
     DataResult<List<ListCarDto>> getAllSorted();
 
-    ListCarDto getByCarId(int id);
+   // ListCarDto getByCarId(int id);
 }

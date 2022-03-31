@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateCarRequest {
 
-    private int carId;
+    private int id;
     private double dailyPrice;
     private String description;
     private short modelYear;
     private int colorId;
     private int brandId;
     private CarStates statusName;
+    private int cityId;
 }

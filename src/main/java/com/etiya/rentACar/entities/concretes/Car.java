@@ -49,5 +49,10 @@ public class Car {
     @Column(name = "status_id")
     private CarStates status;
 
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
+
 
 }

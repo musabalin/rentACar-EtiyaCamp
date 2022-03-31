@@ -6,4 +6,8 @@ public class BusinessMessages {
         public static final String CAR_UNDERMAINTENANCE="Araç Bakımda";
 
     }
+
+    public class CityMessages{
+        public static final String CITY_ADD="Şehir eklendi";
+    }
 }

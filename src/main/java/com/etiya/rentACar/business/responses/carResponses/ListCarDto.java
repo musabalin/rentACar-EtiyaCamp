@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ListCarDto {
 
-    private int carId;
+    private int id;
     private double dailyPrice;
     private String description;
     private short modelYear;
@@ -18,7 +18,8 @@ public class ListCarDto {
     private String colorName;
     private String brandName;
 
-    private CarStates status;
+    private CarStates statusName;
+    private int cityId;
 
 
 }

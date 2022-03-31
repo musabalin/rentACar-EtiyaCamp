@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name="rentals")
+@Table(name = "rentals")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Rental {
@@ -19,7 +19,7 @@ public class Rental {
     @Column(name = "id")
     private int id;
 
-    @Column(name="dateAdded")
+    @Column(name = "dateAdded")
     private LocalDate dateAdded;
 
     @Column(name = "dateReturned")
@@ -33,8 +33,17 @@ public class Rental {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @Column(name = "rentCity")
+    private int rentCity;
 
+    @Column(name = "returnCity")
+    private int returnCity;
 
+    @Column(name = "totalPrice")
+    private double totalPrice;
 
+    @ManyToOne
+    @JoinColumn(name = "additionalService_id")
+    private AdditionalService additionalService;
 
 }

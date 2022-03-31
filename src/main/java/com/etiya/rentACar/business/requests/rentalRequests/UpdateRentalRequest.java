@@ -22,4 +22,8 @@ public class UpdateRentalRequest {
 
     private Customer customer;
 
+    private int rentCity;
+
+    private int returnCity;
+
 }

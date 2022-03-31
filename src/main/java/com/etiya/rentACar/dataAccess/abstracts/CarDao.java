@@ -11,6 +11,7 @@ public interface CarDao extends JpaRepository<Car, Integer> {
     List<Car> getByModelYearIn(List<Short> modelYears);
     List<Car> getByModelYearAndDailyPrice(short modelYear,double dailyPrice);
     List<Car> getByDescriptionContains(String description);
+    List<Car> getByCityId(int cityId);
     Car getById(int id);
 
 }

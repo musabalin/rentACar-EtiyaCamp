@@ -51,6 +51,12 @@ public class CarsController {
         return carService.getByModelYear(modelYear);
     }
 
+    @GetMapping("/getbycityid")
+    public DataResult<List<ListCarDto>> getByCityId(@RequestParam("cityId") int id) {
+
+        return carService.getByCityId(id);
+    }
+
 
     @PutMapping("/update")
     public Result Update(@RequestBody UpdateCarRequest updateCarRequest) {

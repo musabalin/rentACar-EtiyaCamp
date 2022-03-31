@@ -23,4 +23,7 @@ public class ListRentalDto {
     private String carDescription;
     private String customerFirstName;
     private String customerLastName;
+    private String rentCityName;
+    private String returnCityName;
+    private double totalPrice;
 }

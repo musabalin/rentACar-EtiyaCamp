@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteCarRequest {
+public class UpdateCarCityRequest {
     private int id;
+    private int cityId;
 }

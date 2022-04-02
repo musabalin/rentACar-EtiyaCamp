@@ -22,6 +22,12 @@ public class City {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "rentCityId")
+    private List<Rental> rentCityRentals;
+
+    @OneToMany(mappedBy = "returnCityId")
+    private List<Rental> returnCityRentals;
+
     @OneToMany(mappedBy = "city")
     private List<Car> cars;
 

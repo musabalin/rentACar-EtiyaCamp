@@ -5,27 +5,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "additionalServices")
-@Entity
-public class AdditionalService {
+@Table(name = "additionalServiceOrder")
+public class AdditionalServiceOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name="rental_id")
+    private Rental rental;
 
-    @Column(name = "price")
-    private double price;
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "additional_service_id")
+    private AdditionalService additionalService;
 
 }

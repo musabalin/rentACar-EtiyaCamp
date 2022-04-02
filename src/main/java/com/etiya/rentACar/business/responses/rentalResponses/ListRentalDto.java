@@ -1,5 +1,6 @@
 package com.etiya.rentACar.business.responses.rentalResponses;
 
+import com.etiya.rentACar.business.responses.additionalService.AdditionalServiceDto;
 import com.etiya.rentACar.entities.concretes.Car;
 import com.etiya.rentACar.entities.concretes.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +27,6 @@ public class ListRentalDto {
     private String customerLastName;
     private String rentCityName;
     private String returnCityName;
-    private double totalPrice;
+    private double dailyPrice;
+    private List<AdditionalServiceDto> additionalServiceName;
 }

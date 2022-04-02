@@ -29,4 +29,6 @@ public class DeliveryCarRequest {
 
     private int additionalServiceId;
 
+    //private double dailyPrice;
+
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,10 +26,12 @@ public class CreateRentalRequest {
 
     private int customerId;
 
-    private int rentCity;
+    private int rentCityId;
 
-    private int returnCity;
+    private int returnCityId;
 
-    private int additionalServiceId;
+    private double dailyPrice;
+
+    private List<Integer> additionalServiceId;
 
 }

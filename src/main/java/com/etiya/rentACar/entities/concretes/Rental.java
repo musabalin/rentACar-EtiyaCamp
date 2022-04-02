@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,17 +34,19 @@ public class Rental {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "rentCity")
-    private int rentCity;
-
-    @Column(name = "returnCity")
-    private int returnCity;
-
-    @Column(name = "totalPrice")
-    private double totalPrice;
+    @ManyToOne
+    @JoinColumn(name = "rent_city_id")
+    private City rentCityId;
 
     @ManyToOne
-    @JoinColumn(name = "additionalService_id")
-    private AdditionalService additionalService;
+    @JoinColumn(name = "return_city_id")
+    private City returnCityId;
+
+    @Column(name = "dailyPrice")
+    private double dailyPrice;
+
+    @OneToMany(mappedBy = "rental")
+    private List<AdditionalServiceOrder> additionalServiceOrderList;
+
 
 }

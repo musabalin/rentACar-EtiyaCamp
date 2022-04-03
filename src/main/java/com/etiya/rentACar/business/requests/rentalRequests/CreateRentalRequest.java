@@ -1,5 +1,6 @@
 package com.etiya.rentACar.business.requests.rentalRequests;
 
+import com.etiya.rentACar.business.responses.additionalService.AdditionalServiceDto;
 import com.etiya.rentACar.entities.concretes.Car;
 import com.etiya.rentACar.entities.concretes.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateRentalRequest {
 
-    @JsonIgnore
     private int id;
 
     private LocalDate dateAdded;
@@ -32,6 +32,6 @@ public class CreateRentalRequest {
 
     private double dailyPrice;
 
-    private List<Integer> additionalServiceId;
+    private List<Integer> additionalService;
 
 }

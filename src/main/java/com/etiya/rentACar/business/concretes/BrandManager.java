@@ -1,6 +1,7 @@
 package com.etiya.rentACar.business.concretes;
 
 import com.etiya.rentACar.business.abstracts.BrandService;
+import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.brandRequests.CreateBrandRequest;
 import com.etiya.rentACar.business.responses.brandResponses.ListBrandDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
@@ -33,13 +34,11 @@ public class BrandManager implements BrandService {
     public Result add(CreateBrandRequest createBrandRequest) {
 
 
-        /*String colorName = ConvertLetter.convertLetter(createBrandRequest.getName().toUpperCase());
-        createBrandRequest.setName(colorName);*/
         checkIfIsBrandName(createBrandRequest.getName());
         Brand brand = modelMapperService.forRequest()
                 .map(createBrandRequest, Brand.class);
         this.brandDao.save(brand);
-        return new SuccessResult("Renk Başarıyla eklendi");
+        return new SuccessResult(BusinessMessages.BrandMessages.BRAND_ADD);
     }
 
 
@@ -56,7 +55,7 @@ public class BrandManager implements BrandService {
     private void checkIfIsBrandName(String brandName) {
 
         if (this.brandDao.existsBrandByNameIgnoreCase(brandName)) {
-            throw new RuntimeException("This brand already exist.");
+            throw new RuntimeException(BusinessMessages.BrandMessages.BRAND_IS_ALREADY_EXISTS);
         }
 
     }

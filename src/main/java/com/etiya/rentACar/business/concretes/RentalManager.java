@@ -4,6 +4,7 @@ import com.etiya.rentACar.business.abstracts.AdditionalServiceOrderService;
 import com.etiya.rentACar.business.abstracts.AdditionalServiceService;
 import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.abstracts.RentalService;
+import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.CreateAdditionalServiceOrderRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.requests.rentalRequests.CreateRentalRequest;
@@ -43,6 +44,24 @@ public class RentalManager implements RentalService {
         this.additionalServiceOrderService = additionalServiceOrderService;
     }
 
+    //Araç st
+    private void updateCarState(int carId) {
+
+        UpdateStatusRequest updateStatusRequest = new UpdateStatusRequest();
+        updateStatusRequest.setId(carId);
+        updateStatusRequest.setStatusName(CarStates.Rented);
+        carService.updateCarStatus(updateStatusRequest);
+    }
+
+    private void addAdditionalServices(List<Integer> additionalServices,int rentalId){
+        var additionalServiceOrder = new CreateAdditionalServiceOrderRequest();
+        for (int additionalServiceId : additionalServices) {
+            additionalServiceOrder.setAdditionalServiceId(additionalServiceId);
+            additionalServiceOrder.setRentalId(rentalId);
+            additionalServiceOrderService.add(additionalServiceOrder);
+        }
+    }
+
     @Override
     public Result add(CreateRentalRequest createRentalRequest) {
 
@@ -51,22 +70,30 @@ public class RentalManager implements RentalService {
         Rental rental = modelMapperService.forRequest().map(createRentalRequest, Rental.class);
         rentalDao.save(rental);
         //Statü güncelleme
-        UpdateStatusRequest updateStatusRequest = new UpdateStatusRequest();
+        updateCarState(createRentalRequest.getCarId());
+        /*
+        updateState(rental.getId());
+        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(rental, UpdateStatusRequest.class);
         updateStatusRequest.setCityId(createRentalRequest.getRentCityId());
         updateStatusRequest.setId(createRentalRequest.getCarId());
         updateStatusRequest.setStatusName(CarStates.Rented);
+        carService.updateCarStatus(updateStatusRequest);*/
+        //Ek hizmetlerin eklenmesi
+        addAdditionalServices(createRentalRequest.getAdditionalService(),rental.getId());
+        //Şehir Güncelleme
 
+        //Şehir Kontrolü ve ekstra ücret ilavesi
+
+        /*//Eski kodlar
         var additionalServiceOrder = new CreateAdditionalServiceOrderRequest();
-
-        int rental_id = rental.getId();
-        for (int additionalServiceId : createRentalRequest.getAdditionalServiceId()) {
+        int rentalId = rental.getId();
+        for (int additionalServiceId : createRentalRequest.getAdditionalService()) {
             additionalServiceOrder.setAdditionalServiceId(additionalServiceId);
-            additionalServiceOrder.setRentalId(rental_id);
+            additionalServiceOrder.setRentalId(rentalId);
             additionalServiceOrderService.add(additionalServiceOrder);
-        }
-        carService.updateCarStatus(updateStatusRequest);
+        }*/
 
-        return new SuccessResult();
+        return new SuccessResult(BusinessMessages.RentalMessages.RENTAL_RENTED);
     }
 
     private void checkCarStatus(int id) {
@@ -113,6 +140,7 @@ public class RentalManager implements RentalService {
         List<ListRentalDto> response = result.stream()
                 .map(rental -> modelMapperService.forDto().map(rental, ListRentalDto.class))
                 .collect(Collectors.toList());
+
 
         return new SuccessDataResult<List<ListRentalDto>>(response);
     }

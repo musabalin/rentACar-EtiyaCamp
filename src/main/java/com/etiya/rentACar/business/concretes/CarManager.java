@@ -1,6 +1,7 @@
 package com.etiya.rentACar.business.concretes;
 
 import com.etiya.rentACar.business.abstracts.CarService;
+import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.carRequests.*;
 import com.etiya.rentACar.business.responses.carResponses.CarDto;
 import com.etiya.rentACar.business.responses.carResponses.ListCarDto;
@@ -40,7 +41,7 @@ public class CarManager implements CarService {
 
         Car car = modelMapperService.forRequest().map(createCarRequest, Car.class);
         this.carDao.save(car);
-        return new SuccessResult();
+        return new SuccessResult(BusinessMessages.Car.CAR_ADD);
 
     }
 
@@ -50,29 +51,34 @@ public class CarManager implements CarService {
 
         Car car = this.modelMapperService.forRequest().map(carRequest, Car.class);
         this.carDao.save(car);
-        return new SuccessResult();
+        return new SuccessResult(BusinessMessages.Car.CAR_UPDATE);
 
     }
 
     @Override
     public Result delete(DeleteCarRequest carRequest) {
         this.carDao.deleteById(carRequest.getId());
-        return new SuccessResult();
+        return new SuccessResult(BusinessMessages.Car.CAR_REMOVE);
     }
 
     @Override
-    public Result updateCarStatus(UpdateStatusRequest updateStatusRequest) {
+    public void updateCarStatus(UpdateStatusRequest updateStatusRequest) {
 
-        int carId=updateStatusRequest.getId();
-        Car car = carDao.getById(carId);
+        int carId = updateStatusRequest.getId();
+      /*  Car car = carDao.getById(updateStatusRequest.getId());
         UpdateCarRequest response = modelMapperService.forRequest().map(car, UpdateCarRequest.class);
         response.setId(updateStatusRequest.getId());
         response.setStatusName(updateStatusRequest.getStatusName());
         response.setCityId(updateStatusRequest.getCityId());
-       Car car1 = modelMapperService.forRequest().map(response, Car.class);
-        carDao.save(car1);
-        return new SuccessResult();
+        Car car1 = modelMapperService.forRequest().map(response, Car.class);
+        carDao.save(car1);*/
+
+        Car car2 = carDao.getById(carId);
+        car2.setStatus(updateStatusRequest.getStatusName());
+        carDao.save(car2);
+        // return new SuccessResult();
     }
+
 
     @Override
     public Result updateCity(UpdateCarCityRequest updateCarCityRequest) {

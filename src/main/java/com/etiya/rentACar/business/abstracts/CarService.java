@@ -17,7 +17,7 @@ public interface CarService {
 
     Result delete(DeleteCarRequest carRequest);
 
-    Result updateCarStatus(UpdateStatusRequest updateStatusRequest);
+    void updateCarStatus(UpdateStatusRequest updateStatusRequest);
 
     Result updateCity(UpdateCarCityRequest updateCarCityRequest);
 
@@ -37,5 +37,5 @@ public interface CarService {
 
     DataResult<List<ListCarDto>> getAllSorted();
 
-   // ListCarDto getByCarId(int id);
+    // ListCarDto getByCarId(int id);
 }

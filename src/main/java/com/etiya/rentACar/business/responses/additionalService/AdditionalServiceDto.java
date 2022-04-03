@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdditionalServiceDto {
 
-
     private int id;
-    private String name;
-    private double price;
+    private String AdditionalServiceName;
+    private double AdditionalServicePrice;
 }

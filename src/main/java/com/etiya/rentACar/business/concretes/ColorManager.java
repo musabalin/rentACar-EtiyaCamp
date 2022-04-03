@@ -1,6 +1,7 @@
 package com.etiya.rentACar.business.concretes;
 
 import com.etiya.rentACar.business.abstracts.ColorService;
+import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.colorRequests.CreateColorRequest;
 import com.etiya.rentACar.business.responses.colorResponse.ListColorDto;
 import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
@@ -32,7 +33,7 @@ public class ColorManager implements ColorService {
         checkIfIsColorName(createColorRequest.getName());
         Color color = modelMapperService.forRequest().map(createColorRequest, Color.class);
         colorDao.save(color);
-        return new SuccessResult();
+        return new SuccessResult(BusinessMessages.ColorMessages.COLOR_ADD);
 
 
     }

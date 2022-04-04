@@ -3,7 +3,6 @@ package com.etiya.rentACar.api.controller;
 import com.etiya.rentACar.business.abstracts.AdditionalServiceService;
 import com.etiya.rentACar.business.responses.additionalService.AdditionalServiceDto;
 import com.etiya.rentACar.core.utilities.results.DataResult;
-import com.etiya.rentACar.entities.concretes.AdditionalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCarCityRequest {
-    private int id;
+    private int carId;
     private int cityId;
 }

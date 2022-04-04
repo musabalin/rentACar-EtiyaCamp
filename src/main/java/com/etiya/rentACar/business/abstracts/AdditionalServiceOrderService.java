@@ -1,7 +1,7 @@
 package com.etiya.rentACar.business.abstracts;
 
 import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.CreateAdditionalServiceOrderRequest;
-import com.etiya.rentACar.business.responses.additionalServiceOrder.ListAdditionalServiceOrderDto;
+import com.etiya.rentACar.business.responses.additionalServiceOrder.AdditionalServiceOrderDto;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
 
@@ -12,5 +12,5 @@ public interface AdditionalServiceOrderService {
     Result add(CreateAdditionalServiceOrderRequest createAdditionalServiceOrderRequest);
 
 
-    DataResult<List<ListAdditionalServiceOrderDto>> getAll();
+    DataResult<List<AdditionalServiceOrderDto>> getAll();
 }

@@ -65,14 +65,6 @@ public class CarManager implements CarService {
     public void updateCarStatus(UpdateStatusRequest updateStatusRequest) {
 
         int carId = updateStatusRequest.getId();
-      /*  Car car = carDao.getById(updateStatusRequest.getId());
-        UpdateCarRequest response = modelMapperService.forRequest().map(car, UpdateCarRequest.class);
-        response.setId(updateStatusRequest.getId());
-        response.setStatusName(updateStatusRequest.getStatusName());
-        response.setCityId(updateStatusRequest.getCityId());
-        Car car1 = modelMapperService.forRequest().map(response, Car.class);
-        carDao.save(car1);*/
-
         Car car2 = carDao.getById(carId);
         car2.setStatus(updateStatusRequest.getStatusName());
         carDao.save(car2);
@@ -82,7 +74,8 @@ public class CarManager implements CarService {
 
     @Override
     public Result updateCity(UpdateCarCityRequest updateCarCityRequest) {
-        Car car = carDao.getById(updateCarCityRequest.getId());
+        int carId=updateCarCityRequest.getCarId();
+        Car car = carDao.getById(carId);
         UpdateCarRequest response = modelMapperService.forRequest().map(car, UpdateCarRequest.class);
         response.setCityId(updateCarCityRequest.getCityId());
         Car car1 = modelMapperService.forRequest().map(response, Car.class);

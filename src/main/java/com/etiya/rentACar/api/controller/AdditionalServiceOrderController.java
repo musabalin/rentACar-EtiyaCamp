@@ -2,8 +2,7 @@ package com.etiya.rentACar.api.controller;
 
 import com.etiya.rentACar.business.abstracts.AdditionalServiceOrderService;
 import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.CreateAdditionalServiceOrderRequest;
-import com.etiya.rentACar.business.responses.additionalService.AdditionalServiceDto;
-import com.etiya.rentACar.business.responses.additionalServiceOrder.ListAdditionalServiceOrderDto;
+import com.etiya.rentACar.business.responses.additionalServiceOrder.AdditionalServiceOrderDto;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,7 @@ public class AdditionalServiceOrderController {
     }
 
     @GetMapping("/getall")
-    public DataResult<List<ListAdditionalServiceOrderDto>> getAll() {
+    public DataResult<List<AdditionalServiceOrderDto>> getAll() {
         return additionalServiceOrderService.getAll();
     }
 }

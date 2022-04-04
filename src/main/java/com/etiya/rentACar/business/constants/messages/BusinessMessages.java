@@ -9,6 +9,10 @@ public class BusinessMessages {
         public static final String BRAND_ADD="Marka Eklendi.";
         public static final String BRAND_IS_ALREADY_EXISTS="Bu Marka zaten var.";
     }
+
+    public static class InvoiceMessages{
+        public static final String INVOICE_ADD="Fatura Eklendi..";
+    }
     public static class RentalMessages{
         public static final String RENTAL_RENTED="Araç kiralandı.";
     }

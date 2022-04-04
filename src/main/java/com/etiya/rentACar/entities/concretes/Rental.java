@@ -48,5 +48,7 @@ public class Rental {
     @OneToMany(mappedBy = "rental")
     private List<AdditionalServiceOrder> additionalServiceOrderList;
 
+    @OneToMany(mappedBy = "rental")
+    private List<Invoice> invoices;
 
 }

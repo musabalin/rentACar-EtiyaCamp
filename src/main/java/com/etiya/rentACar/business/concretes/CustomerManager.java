@@ -8,7 +8,6 @@ import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.Result;
 import com.etiya.rentACar.core.utilities.results.SuccessResult;
 import com.etiya.rentACar.dataAccess.abstracts.CustomerDao;
-import com.etiya.rentACar.dataAccess.abstracts.RentalDao;
 import com.etiya.rentACar.entities.concretes.Customer;
 import org.springframework.stereotype.Service;
 

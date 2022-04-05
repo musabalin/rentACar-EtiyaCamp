@@ -21,5 +21,6 @@ public class CarDto {
 
     private CarStates status;
     private int cityId;
+    private int kilometer;
 
 }

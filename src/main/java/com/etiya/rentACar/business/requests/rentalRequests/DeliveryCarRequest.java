@@ -12,23 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class DeliveryCarRequest {
 
-
     private int id;
-
-    private LocalDate dateAdded;
-
-    private LocalDate dateReturned;
-
     private int carId;
-
-    private int customerId;
-
-    private int rentCity;
-
-    private int returnCity;
-
-    private int additionalServiceId;
-
-    //private double dailyPrice;
+    private int returnCityId;
+    private LocalDate returnDate;
+    private int kilometer;
 
 }

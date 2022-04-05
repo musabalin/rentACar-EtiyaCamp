@@ -34,6 +34,13 @@ public class Rental {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+
+    @Column(name = "beforeRentalKilometer")
+    private int beforeRentalKilometer;
+
+    @Column(name = "afterRentalKilometer")
+    private int afterRentalKilometer;
+
     @ManyToOne
     @JoinColumn(name = "rent_city_id")
     private City rentCityId;

@@ -15,6 +15,8 @@ public class ListCarDto {
     private String description;
     private short modelYear;
 
+    private int kilometer;
+
     private String colorName;
     private String brandName;
 

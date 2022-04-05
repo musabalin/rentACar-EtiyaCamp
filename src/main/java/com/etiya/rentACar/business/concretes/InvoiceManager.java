@@ -44,6 +44,7 @@ public class InvoiceManager implements InvoiceService {
         Period day = Period.between(rentalDto.getDateAdded(), rentalDto.getDateReturned());
         int daysCount = day.getDays();
 
+
         Invoice invoice = this.modelMapperService.forRequest().map(createInvoicesRequest, Invoice.class);
         invoice.setRentDate(rentalDto.getDateAdded());
         invoice.setReturnDate(rentalDto.getDateReturned());

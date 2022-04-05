@@ -25,7 +25,7 @@ public class RentalsController {
         return rentalService.add(createRentalRequest);
     }
 
-    @PutMapping("/deliveryCar")
+    @PostMapping("/deliveryCar")
     public Result deliveryCar(@RequestBody DeliveryCarRequest deliveryCarRequest) {
         return rentalService.deliveryCar(deliveryCarRequest);
     }

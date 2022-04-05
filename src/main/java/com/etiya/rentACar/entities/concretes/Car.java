@@ -29,6 +29,9 @@ public class Car {
     @Column(name = "modelYear")
     private short modelYear;
 
+    @Column(name = "kilometer")
+    private int kilometer;
+
     @ManyToOne
     @JoinColumn(name = "color_id")
     private Color color;

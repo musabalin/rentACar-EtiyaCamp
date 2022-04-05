@@ -21,6 +21,8 @@ public interface CarService {
 
     Result updateCity(UpdateCarCityRequest updateCarCityRequest);
 
+    void updateKilometer(UpdateKilometerRequest updateKilometerRequest);
+
     CarDto getById(int carId);
 
     List<ListCarDto> getAllStatus(CarStates carStates);

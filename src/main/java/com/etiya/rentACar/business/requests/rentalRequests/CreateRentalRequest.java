@@ -31,6 +31,8 @@ public class CreateRentalRequest {
 
     private int returnCityId;
 
+    private int kilometer;
+
     private double dailyPrice;
 
     private List<Integer> additionalService;

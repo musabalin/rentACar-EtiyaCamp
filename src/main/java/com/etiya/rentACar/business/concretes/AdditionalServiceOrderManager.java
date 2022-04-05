@@ -28,7 +28,8 @@ public class AdditionalServiceOrderManager implements AdditionalServiceOrderServ
 
     @Override
     public Result add(CreateAdditionalServiceOrderRequest createAdditionalServiceOrderRequest) {
-        AdditionalServiceOrder result = modelMapperService.forRequest().map(createAdditionalServiceOrderRequest, AdditionalServiceOrder.class);
+        AdditionalServiceOrder result = modelMapperService.forRequest()
+                .map(createAdditionalServiceOrderRequest, AdditionalServiceOrder.class);
         additionalServiceOrderDao.save(result);
         return new SuccessResult("Ek hizmetler eklendi..");
     }

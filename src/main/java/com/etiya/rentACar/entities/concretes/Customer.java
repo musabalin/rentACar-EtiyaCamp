@@ -28,5 +28,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Invoice> invoices;
+
 
 }

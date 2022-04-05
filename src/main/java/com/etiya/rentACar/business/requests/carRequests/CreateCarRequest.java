@@ -22,6 +22,8 @@ public class CreateCarRequest {
     @Min(1)
     private double dailyPrice;
 
+    private int kilometer;
+
     @NotNull
     @Length(min = 2, max = 50)
     private String description;

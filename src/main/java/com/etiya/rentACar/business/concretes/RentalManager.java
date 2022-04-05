@@ -6,6 +6,7 @@ import com.etiya.rentACar.business.abstracts.RentalService;
 import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.CreateAdditionalServiceOrderRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarCityRequest;
+import com.etiya.rentACar.business.requests.carRequests.UpdateKilometerRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
 import com.etiya.rentACar.business.requests.rentalRequests.CreateRentalRequest;
 import com.etiya.rentACar.business.requests.rentalRequests.DeleteRentalRequest;
@@ -45,12 +46,20 @@ public class RentalManager implements RentalService {
     }
 
     //Araç statü güncelleme
-    private void updateCarState(int carId) {
+    private void updateCarState(int carId, CarStates carStates) {
 
         UpdateStatusRequest updateStatusRequest = new UpdateStatusRequest();
         updateStatusRequest.setId(carId);
-        updateStatusRequest.setStatusName(CarStates.Rented);
+        updateStatusRequest.setStatusName(carStates);
         carService.updateCarStatus(updateStatusRequest);
+    }
+
+    //Araç kilometre güncellenmesi
+    private void updateCarKilometre(int carId, int kilometer) {
+        UpdateKilometerRequest updateKilometerRequest = new UpdateKilometerRequest();
+        updateKilometerRequest.setCarId(carId);
+        updateKilometerRequest.setKilometer(kilometer);
+        carService.updateKilometer(updateKilometerRequest);
     }
 
     //Araç güncel şehir
@@ -79,30 +88,13 @@ public class RentalManager implements RentalService {
         Rental rental = modelMapperService.forRequest().map(createRentalRequest, Rental.class);
         rentalDao.save(rental);
 
-        /*
-        updateState(rental.getId());
-        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(rental, UpdateStatusRequest.class);
-        updateStatusRequest.setCityId(createRentalRequest.getRentCityId());
-        updateStatusRequest.setId(createRentalRequest.getCarId());
-        updateStatusRequest.setStatusName(CarStates.Rented);
-        carService.updateCarStatus(updateStatusRequest);*/
-
         //Ek hizmetlerin eklenmesi
         addAdditionalServices(createRentalRequest.getAdditionalService(), rental.getId());
         //Şehir Güncelleme
         UpdateCarCity(createRentalRequest.getCarId(), createRentalRequest.getReturnCityId());
         //Statü güncelleme
-        updateCarState(createRentalRequest.getCarId());
-        //Şehir Kontrolü ve ekstra ücret ilavesi
+        updateCarState(createRentalRequest.getCarId(), CarStates.Rented);
 
-        /*//Eski kodlar
-        var additionalServiceOrder = new CreateAdditionalServiceOrderRequest();
-        int rentalId = rental.getId();
-        for (int additionalServiceId : createRentalRequest.getAdditionalService()) {
-            additionalServiceOrder.setAdditionalServiceId(additionalServiceId);
-            additionalServiceOrder.setRentalId(rentalId);
-            additionalServiceOrderService.add(additionalServiceOrder);
-        }*/
 
         return new SuccessResult(BusinessMessages.RentalMessages.RENTAL_RENTED);
     }
@@ -116,32 +108,23 @@ public class RentalManager implements RentalService {
 
     @Override
     public Result deliveryCar(DeliveryCarRequest deliveryCarRequest) {
-        //***Soru Her operasyon için ayrı kontrol(checkif) mi yazmak gerekir.
 
-        Rental rental = modelMapperService.forRequest().map(deliveryCarRequest, Rental.class);
-        var car = carService.getById(deliveryCarRequest.getCarId());
-        //
-        UpdateStatusRequest updateStatusRequest = new UpdateStatusRequest();
-        updateStatusRequest.setId(deliveryCarRequest.getCarId());
-        updateStatusRequest.setStatusName(CarStates.Available);
-        updateStatusRequest.setCityId(deliveryCarRequest.getReturnCity());
-        carService.updateCarStatus(updateStatusRequest);
-        //
-        //Kiralama Günü hesaplama
-        Period day = Period.between(rental.getDateAdded(), rental.getDateReturned());
-        int daysCount = day.getDays();
+        //kilometre ve tarih güncellemesi
+        Rental result = rentalDao.getById(deliveryCarRequest.getId());
+        result.setDateReturned(deliveryCarRequest.getReturnDate());
+        result.setAfterRentalKilometer(deliveryCarRequest.getKilometer());
 
-        //Ek Servis ücretleri
-        // var additionalServiceDto = additionalService.getById(deliveryCarRequest.getAdditionalServiceId());
 
-        //Toplam ücret hesaplama ve farklı şehirdeki aracın maliyet eklenmesi
-        rental.setDailyPrice(car.getDailyPrice() * daysCount /*+ additionalServiceDto.getPrice()*/);
-        if (!Objects.equals(deliveryCarRequest.getRentCity(), deliveryCarRequest.getReturnCity())) {
-            rental.setDailyPrice(rental.getDailyPrice() + 750);
-        }
+        int carId = deliveryCarRequest.getCarId();
+        //Kilometre güncellenmesi
+        //updateCarKilometre(carId, deliveryCarRequest.getKilometer());
+        //Şehir güncelleme
+        UpdateCarCity(deliveryCarRequest.getCarId(), deliveryCarRequest.getReturnCityId());
+        //Statü güncellemesi
+        updateCarState(carId, CarStates.Available);
 
-        rentalDao.save(rental);
-        return new SuccessResult();
+        rentalDao.save(result);
+        return new SuccessResult("Araç teslim edildi.");
     }
 
     @Override
@@ -162,7 +145,6 @@ public class RentalManager implements RentalService {
 
         return new SuccessDataResult<List<ListRentalDto>>(response);
     }
-
 
     @Override
     public Result delete(DeleteRentalRequest deleteRentalRequest) {

@@ -25,9 +25,7 @@ import com.etiya.rentACar.entities.concretes.CarStates;
 import com.etiya.rentACar.entities.concretes.Rental;
 import org.springframework.stereotype.Service;
 
-import java.time.Period;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,8 +84,12 @@ public class RentalManager implements RentalService {
 
         checkCarStatus(createRentalRequest.getCarId());
         Rental rental = modelMapperService.forRequest().map(createRentalRequest, Rental.class);
-        rentalDao.save(rental);
 
+
+        CarDto car = carService.getById(createRentalRequest.getCarId());
+
+        rental.setBeforeRentalKilometer(car.getKilometer());
+        rentalDao.save(rental);
         //Ek hizmetlerin eklenmesi
         addAdditionalServices(createRentalRequest.getAdditionalService(), rental.getId());
         //Şehir Güncelleme
@@ -112,18 +114,17 @@ public class RentalManager implements RentalService {
         //kilometre ve tarih güncellemesi
         Rental result = rentalDao.getById(deliveryCarRequest.getId());
         result.setDateReturned(deliveryCarRequest.getReturnDate());
-        result.setAfterRentalKilometer(deliveryCarRequest.getKilometer());
-
+        result.setAfterRentalKilometer(deliveryCarRequest.getAfterRentKilometer());
+        rentalDao.save(result);
 
         int carId = deliveryCarRequest.getCarId();
         //Kilometre güncellenmesi
-        //updateCarKilometre(carId, deliveryCarRequest.getKilometer());
+        updateCarKilometre(carId, deliveryCarRequest.getAfterRentKilometer());
         //Şehir güncelleme
         UpdateCarCity(deliveryCarRequest.getCarId(), deliveryCarRequest.getReturnCityId());
         //Statü güncellemesi
         updateCarState(carId, CarStates.Available);
 
-        rentalDao.save(result);
         return new SuccessResult("Araç teslim edildi.");
     }
 

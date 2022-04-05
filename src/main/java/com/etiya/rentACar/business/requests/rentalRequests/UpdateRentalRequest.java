@@ -26,6 +26,7 @@ public class UpdateRentalRequest {
 
     private int returnCity;
 
-    private int kilometer;
+    private int afterRentKilometer;
+    private int beforeRentKilometer;
 
 }

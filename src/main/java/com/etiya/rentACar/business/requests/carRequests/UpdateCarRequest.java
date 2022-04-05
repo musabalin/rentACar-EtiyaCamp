@@ -19,4 +19,6 @@ public class UpdateCarRequest {
     private int brandId;
     private CarStates statusName;
     private int cityId;
+    private int kilometer;
+
 }

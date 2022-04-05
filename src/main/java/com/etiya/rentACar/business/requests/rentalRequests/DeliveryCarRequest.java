@@ -16,6 +16,6 @@ public class DeliveryCarRequest {
     private int carId;
     private int returnCityId;
     private LocalDate returnDate;
-    private int kilometer;
+    private int afterRentKilometer;
 
 }

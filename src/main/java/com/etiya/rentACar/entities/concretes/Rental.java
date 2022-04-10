@@ -34,7 +34,6 @@ public class Rental {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-
     @Column(name = "beforeRentalKilometer")
     private int beforeRentalKilometer;
 
@@ -53,9 +52,12 @@ public class Rental {
     private double dailyPrice;
 
     @OneToMany(mappedBy = "rental")
-    private List<AdditionalServiceOrder> additionalServiceOrderList;
+    private List<Invoice> invoices;
 
     @OneToMany(mappedBy = "rental")
-    private List<Invoice> invoices;
+    private List<AdditionalServiceOrder> additionalServiceOrders;
+
+    @OneToOne(mappedBy = "rental")
+    private  Payment payment;
 
 }

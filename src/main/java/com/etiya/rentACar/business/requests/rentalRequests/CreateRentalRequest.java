@@ -33,6 +33,6 @@ public class CreateRentalRequest {
 
     private double dailyPrice;
 
-    private List<Integer> additionalService;
+ //   private List<Integer> additionalService;
 
 }

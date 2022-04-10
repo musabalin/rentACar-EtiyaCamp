@@ -8,6 +8,7 @@ import com.etiya.rentACar.business.responses.rentalResponses.ListRentalDto;
 import com.etiya.rentACar.business.responses.rentalResponses.RentalDto;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
+import com.etiya.rentACar.entities.concretes.Rental;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public interface RentalService {
 
-    Result add(CreateRentalRequest rentalRequest);
+    DataResult<Rental> add(CreateRentalRequest rentalRequest);
 
     Result delete(DeleteRentalRequest deleteRentalRequest);
 

@@ -22,6 +22,8 @@ public class CreateInvoicesRequest {
 
     private LocalDate createDate;
 
+    private double totalPrice;
+
     private int customerId;
 
     private int rentalId;

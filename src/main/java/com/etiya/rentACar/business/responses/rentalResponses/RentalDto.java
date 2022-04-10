@@ -23,5 +23,5 @@ public class RentalDto {
     private String rentCityName;
     private String returnCityName;
     private double dailyPrice;
-    private List<AdditionalServiceDto> additionalServiceOrder;
+    private List<AdditionalServiceDto> additionalServices;
 }

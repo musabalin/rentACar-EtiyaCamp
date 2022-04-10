@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdditionalServiceOrderDto {
     private int id;
-    private int rental_id;
+    private int rentalId;
     private String additionalServiceName;
     private double additionalServicePrice;
 }

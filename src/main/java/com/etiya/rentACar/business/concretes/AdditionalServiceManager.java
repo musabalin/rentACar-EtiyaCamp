@@ -24,11 +24,11 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public AdditionalServiceDto getById(int id) {
+    public DataResult<AdditionalServiceDto> getById(int id) {
 
         AdditionalService result = additionalServiceDao.getById(id);
         AdditionalServiceDto additionalServiceDto = modelMapperService.forRequest().map(result, AdditionalServiceDto.class);
-        return additionalServiceDto;
+        return new SuccessDataResult<AdditionalServiceDto>(additionalServiceDto);
     }
 
     @Override

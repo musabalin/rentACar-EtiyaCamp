@@ -44,7 +44,7 @@ public class ColorManager implements ColorService {
         List<ListColorDto> response = colors.stream()
                 .map(color -> modelMapperService.forDto().map(color, ListColorDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListColorDto>>();
+        return new SuccessDataResult<List<ListColorDto>>(response);
     }
 
     private void checkIfIsColorName(String colorName) {

@@ -47,4 +47,13 @@ public class AdditionalServiceOrderManager implements AdditionalServiceOrderServ
         return new SuccessDataResult<List<AdditionalServiceOrderDto>>(response);
 
     }
+
+    @Override
+    public List<AdditionalServiceOrderDto> getByRentalId(int rentalId) {
+        List<AdditionalServiceOrder> result=additionalServiceOrderDao.getByRentalId(rentalId);
+        List<AdditionalServiceOrderDto> response=result.stream()
+                .map(additionalService -> modelMapperService.forDto().map(additionalService, AdditionalServiceOrderDto.class))
+                .collect(Collectors.toList());
+        return response;
+    }
 }

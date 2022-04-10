@@ -7,8 +7,11 @@ import com.etiya.rentACar.core.utilities.results.Result;
 import java.util.List;
 
 public interface AdditionalServiceService {
-    AdditionalServiceDto getById(int id);
+
+
+    DataResult<AdditionalServiceDto> getById(int id);
 
     DataResult<List<AdditionalServiceDto>> getAll();
+
 
 }

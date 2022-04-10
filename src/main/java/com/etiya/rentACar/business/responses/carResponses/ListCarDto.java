@@ -21,7 +21,7 @@ public class ListCarDto {
     private String brandName;
 
     private CarStates statusName;
-    private int cityId;
+    private String cityName;
 
 
 }

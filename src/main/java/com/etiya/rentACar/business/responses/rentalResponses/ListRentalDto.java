@@ -27,7 +27,7 @@ public class ListRentalDto {
     private double dailyPrice;
     private int beforeRentKilometer;
     private int afterRentKilometer;
-    private List<AdditionalServiceDto> additionalServicePrice;
+    private List<AdditionalServiceDto> additionalServices;
 
     //private AdditionalServiceDto additionalServiceDailyPrice;
 }

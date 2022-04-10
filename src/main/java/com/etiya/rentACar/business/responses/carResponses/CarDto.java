@@ -23,4 +23,5 @@ public class CarDto {
     private int cityId;
     private int kilometer;
 
+
 }

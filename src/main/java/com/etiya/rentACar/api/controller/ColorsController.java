@@ -24,7 +24,7 @@ public class ColorsController {
     }
 
     @GetMapping("getall")
-    public DataResult<List<ListColorDto>> getall() {
+    public DataResult<List<ListColorDto>> getAll() {
         return colorService.getAll();
     }
 

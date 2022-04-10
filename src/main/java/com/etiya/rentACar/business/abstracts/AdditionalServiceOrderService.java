@@ -11,6 +11,7 @@ public interface AdditionalServiceOrderService {
 
     Result add(CreateAdditionalServiceOrderRequest createAdditionalServiceOrderRequest);
 
-
     DataResult<List<AdditionalServiceOrderDto>> getAll();
+
+    List<AdditionalServiceOrderDto> getByRentalId(int rentalId);
 }

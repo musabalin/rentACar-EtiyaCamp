@@ -12,6 +12,7 @@ import com.etiya.rentACar.business.responses.rentalResponses.RentalDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
+import com.etiya.rentACar.core.utilities.results.SuccessDataResult;
 import com.etiya.rentACar.core.utilities.results.SuccessResult;
 import com.etiya.rentACar.dataAccess.abstracts.InvoiceDao;
 import com.etiya.rentACar.entities.concretes.Invoice;
@@ -36,7 +37,7 @@ public class InvoiceManager implements InvoiceService {
     }
 
     @Override
-    public Result add(CreateInvoicesRequest createInvoicesRequest) {
+    public DataResult<Invoice> add(CreateInvoicesRequest createInvoicesRequest) {
 
         int rentalId = createInvoicesRequest.getRentalId();
         RentalDto rentalDto = this.rentalService.getById(rentalId);
@@ -53,7 +54,7 @@ public class InvoiceManager implements InvoiceService {
         this.invoiceDao.save(invoice);
 
 
-        return new SuccessResult(BusinessMessages.InvoiceMessages.INVOICE_ADD);
+        return new SuccessDataResult<Invoice>(invoice,BusinessMessages.InvoiceMessages.INVOICE_ADD);
 
     }
 
@@ -91,10 +92,10 @@ public class InvoiceManager implements InvoiceService {
         }
 
         totalPrice += rentalDto.getDailyPrice() * daysCount;
-
-        for (AdditionalServiceDto additionalService : rentalDto.getAdditionalServiceOrder()) {
+/*
+        for (AdditionalServiceDto additionalService : rentalDto.getAdditionalServices()) {
             totalPrice += additionalService.getAdditionalServicePrice() * daysCount;
-        }
+        }*/
 
         return totalPrice;
 

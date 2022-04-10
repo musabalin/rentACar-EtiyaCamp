@@ -79,7 +79,7 @@ public class RentalManager implements RentalService {
     }
 
     @Override
-    public Result add(CreateRentalRequest createRentalRequest) {
+    public DataResult<Rental> add(CreateRentalRequest createRentalRequest) {
 
 
         checkCarStatus(createRentalRequest.getCarId());
@@ -91,14 +91,15 @@ public class RentalManager implements RentalService {
         rental.setBeforeRentalKilometer(car.getKilometer());
         rentalDao.save(rental);
         //Ek hizmetlerin eklenmesi
-        addAdditionalServices(createRentalRequest.getAdditionalService(), rental.getId());
+        //Sonuna kadar savunacağım........
+        // addAdditionalServices(createRentalRequest.getAdditionalService(), rental.getId());
         //Şehir Güncelleme
         UpdateCarCity(createRentalRequest.getCarId(), createRentalRequest.getReturnCityId());
         //Statü güncelleme
         updateCarState(createRentalRequest.getCarId(), CarStates.Rented);
 
 
-        return new SuccessResult(BusinessMessages.RentalMessages.RENTAL_RENTED);
+        return new SuccessDataResult<Rental>(rental, BusinessMessages.RentalMessages.RENTAL_RENTED);
     }
 
     private void checkCarStatus(int id) {

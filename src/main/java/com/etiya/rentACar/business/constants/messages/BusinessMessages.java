@@ -22,6 +22,10 @@ public class BusinessMessages {
         public static final String COLOR_IS_ALREADY_EXISTS="Bu Renk var.";
     }
 
+    public static class PaymentRequest{
+        public static final String PAYMENT_ADD="Ödeme gerçekleşti";
+    }
+
     public static class CityMessages{
         public static final String CITY_ADD="Şehir eklendi.";
         public static final String CITY_DELETE="Şehir Silindi.";

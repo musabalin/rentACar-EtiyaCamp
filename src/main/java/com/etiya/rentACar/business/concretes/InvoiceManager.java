@@ -49,7 +49,6 @@ public class InvoiceManager implements InvoiceService {
         Invoice invoice = this.modelMapperService.forRequest().map(createInvoicesRequest, Invoice.class);
         invoice.setRentDate(rentalDto.getDateAdded());
         invoice.setReturnDate(rentalDto.getDateReturned());
-        invoice.setTotalPrice(calculateTotalPrice(rentalDto));
         invoice.setTotalRentDay(daysCount);
         this.invoiceDao.save(invoice);
 
@@ -81,23 +80,5 @@ public class InvoiceManager implements InvoiceService {
     @Override
     public DataResult<List<ListInvoicesDto>> findByCreateDateBetween(LocalDate startDate, LocalDate endDate) {
         return null;
-    }
-
-    private double calculateTotalPrice(RentalDto rentalDto) {
-        double totalPrice = 0;
-        Period day = Period.between(rentalDto.getDateAdded(), rentalDto.getDateReturned());
-        int daysCount = day.getDays();
-        if (!Objects.equals(rentalDto.getRentCityName(), rentalDto.getReturnCityName())) {
-            totalPrice += 750;
-        }
-
-        totalPrice += rentalDto.getDailyPrice() * daysCount;
-/*
-        for (AdditionalServiceDto additionalService : rentalDto.getAdditionalServices()) {
-            totalPrice += additionalService.getAdditionalServicePrice() * daysCount;
-        }*/
-
-        return totalPrice;
-
     }
 }

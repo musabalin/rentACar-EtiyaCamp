@@ -6,7 +6,6 @@ import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.Create
 import com.etiya.rentACar.business.requests.invoicesRequests.CreateInvoicesRequest;
 import com.etiya.rentACar.business.requests.paymentRequests.CreatePaymentRequest;
 import com.etiya.rentACar.business.responses.paymentResponses.ListPaymentDto;
-import com.etiya.rentACar.business.responses.rentalResponses.RentalDto;
 import com.etiya.rentACar.core.utilities.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
@@ -36,6 +35,8 @@ public class PaymentManager implements PaymentService {
 
     private AdditionalServiceService additionalServiceService;
 
+    private InvoiceService invoiceService;
+
 
     public PaymentManager(PaymentDao paymentDao,
                           ModelMapperService modelMapperService,
@@ -50,8 +51,6 @@ public class PaymentManager implements PaymentService {
         this.invoiceService = invoiceService;
     }
 
-    private InvoiceService invoiceService;
-
 
     @Override
     public Result add(CreatePaymentRequest createPaymentRequest) {
@@ -64,9 +63,9 @@ public class PaymentManager implements PaymentService {
         //Ek hizmetler ekleme
         addAdditionalServiceOrder(createPaymentRequest, rental.getId());
         //Fatura ekleme
-        Invoice invoice = addInvoice(createPaymentRequest.getCreateInvoicesRequest(), rental.getId());
+        Invoice invoice = addInvoice(createPaymentRequest, rental.getId());
         //Toplam ücret
-        result.setTotalPrice(calculateTotalPrice(createPaymentRequest, rental.getId()));
+        result.setTotalPrice(calculateTotalPrice(createPaymentRequest));
         result.setInvoice(invoice);
         result.setRental(rental);
 
@@ -84,10 +83,11 @@ public class PaymentManager implements PaymentService {
         return new SuccessDataResult<List<ListPaymentDto>>(response);
     }
 
-    private double calculateTotalPrice(CreatePaymentRequest createPaymentRequest, int rentalId) {
-        RentalDto rentalDto = rentalService.getById(rentalId);
+    private double calculateTotalPrice(CreatePaymentRequest createPaymentRequest) {
+
         double totalPrice = 0;
-        Period day = Period.between(rentalDto.getDateAdded(), rentalDto.getDateReturned());
+        Period day = Period.between(createPaymentRequest.getCreateRentalRequest().getDateAdded(),
+                createPaymentRequest.getCreateRentalRequest().getDateReturned());
         int daysCount = day.getDays();
         if (!Objects.equals(createPaymentRequest.getCreateRentalRequest().getReturnCityId(),
                 createPaymentRequest.getCreateRentalRequest().getRentCityId())) {
@@ -102,16 +102,18 @@ public class PaymentManager implements PaymentService {
         }
 
 
-        totalPrice += rentalDto.getDailyPrice() * daysCount;
+        totalPrice += createPaymentRequest.getCreateRentalRequest().getDailyPrice() * daysCount;
 
         return totalPrice;
 
     }
 
-    private Invoice addInvoice(CreateInvoicesRequest invoiceRequest, int rentalId) {
+    private Invoice addInvoice(CreatePaymentRequest invoiceRequest, int rentalId) {
+
 
         var invoice = new CreateInvoicesRequest();
-        invoice = modelMapperService.forRequest().map(invoiceRequest, CreateInvoicesRequest.class);
+        invoice = modelMapperService.forRequest().map(invoiceRequest.getCreateInvoicesRequest(), CreateInvoicesRequest.class);
+        invoice.setTotalPrice(calculateTotalPrice(invoiceRequest));
         invoice.setRentalId(rentalId);
         return invoiceService.add(invoice).getData();
 

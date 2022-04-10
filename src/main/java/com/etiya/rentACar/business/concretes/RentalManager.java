@@ -91,7 +91,7 @@ public class RentalManager implements RentalService {
         rental.setBeforeRentalKilometer(car.getKilometer());
         rentalDao.save(rental);
         //Ek hizmetlerin eklenmesi
-        //Sonuna kadar savunacağım........
+
         // addAdditionalServices(createRentalRequest.getAdditionalService(), rental.getId());
         //Şehir Güncelleme
         UpdateCarCity(createRentalRequest.getCarId(), createRentalRequest.getReturnCityId());

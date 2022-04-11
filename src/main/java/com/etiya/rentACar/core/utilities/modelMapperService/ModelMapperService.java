@@ -1,4 +1,4 @@
-package com.etiya.rentACar.core.utilities;
+package com.etiya.rentACar.core.utilities.modelMapperService;
 
 import org.modelmapper.ModelMapper;
 

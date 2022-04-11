@@ -28,9 +28,7 @@ public class CreatePaymentRequest {
 
     private String creditCardNo;
 
-    private String expirationMonth;
-
-    private String expirationYear;
+    private String expirationDate;
 
     private String cvv;
 

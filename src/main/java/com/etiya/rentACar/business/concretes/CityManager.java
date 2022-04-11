@@ -7,7 +7,7 @@ import com.etiya.rentACar.business.requests.cityRequests.CreateCityRequest;
 import com.etiya.rentACar.business.requests.cityRequests.DeleteCityRequest;
 import com.etiya.rentACar.business.requests.cityRequests.UpdateCityRequest;
 import com.etiya.rentACar.business.responses.cityResponses.ListCityDto;
-import com.etiya.rentACar.core.utilities.ModelMapperService;
+import com.etiya.rentACar.core.utilities.modelMapperService.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
 import com.etiya.rentACar.core.utilities.results.SuccessDataResult;

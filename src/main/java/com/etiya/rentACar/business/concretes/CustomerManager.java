@@ -4,7 +4,7 @@ import com.etiya.rentACar.business.abstracts.CustomerService;
 import com.etiya.rentACar.business.requests.customerRequests.CreateCustomerRequest;
 import com.etiya.rentACar.business.requests.customerRequests.DeleteCustomerRequest;
 import com.etiya.rentACar.business.requests.rentalRequests.UpdateRentalRequest;
-import com.etiya.rentACar.core.utilities.ModelMapperService;
+import com.etiya.rentACar.core.utilities.modelMapperService.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.Result;
 import com.etiya.rentACar.core.utilities.results.SuccessResult;
 import com.etiya.rentACar.dataAccess.abstracts.CustomerDao;

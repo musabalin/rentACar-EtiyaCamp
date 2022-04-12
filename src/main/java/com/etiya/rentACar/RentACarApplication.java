@@ -3,6 +3,7 @@ package com.etiya.rentACar;
 
 import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.results.ErrorDataResult;
+import com.etiya.rentACar.core.utilities.services.posServices.IsBankasiPosService;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,6 +30,11 @@ public class RentACarApplication {
     @Bean
     public ModelMapper getModelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public IsBankasiPosService getIsBankasiPosService() {
+        return new IsBankasiPosService();
     }
 
     @ExceptionHandler

@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class IsBankasiPosServiceAdapter implements PosService {
 
-    IsBankasiPosService isBankasiPosService = new IsBankasiPosService();
+    private IsBankasiPosService isBankasiPosService;
+
+    public IsBankasiPosServiceAdapter(IsBankasiPosService isBankasiPosService) {
+        this.isBankasiPosService = isBankasiPosService;
+    }
 
     @Override
     public boolean makePayment(CreditCard creditCard) {

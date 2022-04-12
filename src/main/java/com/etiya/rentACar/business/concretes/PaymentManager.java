@@ -7,6 +7,7 @@ import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.Create
 import com.etiya.rentACar.business.requests.invoicesRequests.CreateInvoicesRequest;
 import com.etiya.rentACar.business.requests.paymentRequests.CreatePaymentRequest;
 import com.etiya.rentACar.business.responses.paymentResponses.ListPaymentDto;
+import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.modelMapperService.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
@@ -121,8 +122,9 @@ public class PaymentManager implements PaymentService {
         creditCard.setCreditCardNumber(createPaymentRequest.getCreditCardNo());
         creditCard.setExpirationDate(createPaymentRequest.getExpirationDate());
         creditCard.setCvv(createPaymentRequest.getCvv());
-        posService.makePayment(creditCard);
-
+        if (!posService.makePayment(creditCard)) {
+            throw new BusinessException("Kart geçersiz");
+        }
     }
 
     private Invoice addInvoice(CreatePaymentRequest invoiceRequest, int rentalId) {

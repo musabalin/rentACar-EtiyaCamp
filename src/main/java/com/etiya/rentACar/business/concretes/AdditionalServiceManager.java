@@ -14,33 +14,31 @@ import java.util.stream.Collectors;
 
 @Service
 public class AdditionalServiceManager implements AdditionalServiceService {
-    private AdditionalServiceDao additionalServiceDao;
-    private ModelMapperService modelMapperService;
 
+    private final AdditionalServiceDao additionalServiceDao;
+    private final ModelMapperService modelMapperService;
 
-    public AdditionalServiceManager(AdditionalServiceDao additionalServiceDao, ModelMapperService modelMapperService) {
+    public AdditionalServiceManager(AdditionalServiceDao additionalServiceDao,
+                                    ModelMapperService modelMapperService) {
         this.additionalServiceDao = additionalServiceDao;
         this.modelMapperService = modelMapperService;
     }
 
     @Override
     public DataResult<AdditionalServiceDto> getById(int id) {
-
         AdditionalService result = additionalServiceDao.getById(id);
-        AdditionalServiceDto additionalServiceDto = modelMapperService.forRequest().map(result, AdditionalServiceDto.class);
-        return new SuccessDataResult<AdditionalServiceDto>(additionalServiceDto);
+        AdditionalServiceDto additionalServiceDto = modelMapperService.forRequest()
+                .map(result, AdditionalServiceDto.class);
+        return new SuccessDataResult<>(additionalServiceDto);
     }
 
     @Override
     public DataResult<List<AdditionalServiceDto>> getAll() {
-
         List<AdditionalService> result = additionalServiceDao.findAll();
         List<AdditionalServiceDto> response = result.stream()
                 .map(additionalService -> modelMapperService.forDto().map(additionalService, AdditionalServiceDto.class))
                 .collect(Collectors.toList());
-
-
-        return new SuccessDataResult<List<AdditionalServiceDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
 }

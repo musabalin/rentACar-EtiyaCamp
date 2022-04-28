@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AdditionalServiceOrderDao extends JpaRepository<AdditionalServiceOrder, Integer> {
-
     List<AdditionalServiceOrder> getByRentalId(int rentalId);
 }

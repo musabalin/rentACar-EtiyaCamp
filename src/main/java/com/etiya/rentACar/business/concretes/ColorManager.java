@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ColorManager implements ColorService {
-    private ColorDao colorDao;
-    private ModelMapperService modelMapperService;
+    private final ColorDao colorDao;
+    private final ModelMapperService modelMapperService;
 
     public ColorManager(ColorDao colorDao, ModelMapperService modelMapperService) {
         this.colorDao = colorDao;
@@ -29,30 +29,30 @@ public class ColorManager implements ColorService {
 
     @Override
     public Result add(CreateColorRequest createColorRequest) {
-
         checkIfIsColorName(createColorRequest.getName());
+
         Color color = modelMapperService.forRequest().map(createColorRequest, Color.class);
+
         colorDao.save(color);
         return new SuccessResult(BusinessMessages.ColorMessages.COLOR_ADD);
-
-
     }
 
     @Override
     public DataResult<List<ListColorDto>> getAll() {
         List<Color> colors = colorDao.findAll();
+
         List<ListColorDto> response = colors.stream()
                 .map(color -> modelMapperService.forDto().map(color, ListColorDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListColorDto>>(response);
+
+        return new SuccessDataResult<>(response);
     }
 
     private void checkIfIsColorName(String colorName) {
+        Boolean check = this.colorDao.existsByNameIgnoreCase(colorName);
 
-        if (this.colorDao.existsByNameIgnoreCase(colorName)) {
+        if (Boolean.TRUE.equals(check)) {
             throw new BusinessException("This color already exist.");
         }
-
     }
-
 }

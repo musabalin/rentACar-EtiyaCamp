@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 public interface RentalService {
-
     DataResult<Rental> add(CreateRentalRequest rentalRequest);
 
     Result delete(DeleteRentalRequest deleteRentalRequest);
@@ -27,6 +26,4 @@ public interface RentalService {
     RentalDto getById(int rentalId);
 
     DataResult<List<ListRentalDto>> getAll();
-
-
 }

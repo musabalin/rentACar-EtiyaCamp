@@ -50,7 +50,7 @@ public class InvoiceManager implements InvoiceService {
         this.invoiceDao.save(invoice);
 
 
-        return new SuccessDataResult<Invoice>(invoice,BusinessMessages.InvoiceMessages.INVOICE_ADD);
+        return new SuccessDataResult<>(invoice,BusinessMessages.InvoiceMessages.INVOICE_ADD);
 
     }
 

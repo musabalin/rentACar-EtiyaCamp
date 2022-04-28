@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,8 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "payments")
 public class Payment {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,12 +24,7 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
-    /*
-        @OneToMany
-        private List<AdditionalServiceOrder> additionalServiceOrder;
-    */
+
     @Column(name = "totalPrice")
     private double totalPrice;
-
-
 }

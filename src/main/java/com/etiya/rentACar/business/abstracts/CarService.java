@@ -29,9 +29,7 @@ public interface CarService {
 
     DataResult<List<ListCarDto>> getAll();
 
-
     DataResult<List<ListCarDto>> getByCityId(int cityId);
-
 
     DataResult<List<ListCarDto>> getByModelYear(short modelYear);
 

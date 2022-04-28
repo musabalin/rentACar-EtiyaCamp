@@ -44,7 +44,8 @@ public class MaintenanceManager implements MaintenanceService {
                 .map(createMaintenanceRequest, Maintenance.class);
         maintenanceDao.save(maintenance);
 
-        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest().map(maintenance, UpdateStatusRequest.class);
+        UpdateStatusRequest updateStatusRequest = modelMapperService.forRequest()
+                .map(maintenance, UpdateStatusRequest.class);
 
         updateStatusRequest.setStatusName(CarStates.UnderMaintenance);
         carService.updateCarStatus(updateStatusRequest);
@@ -60,7 +61,7 @@ public class MaintenanceManager implements MaintenanceService {
         List<ListMaintenanceDto> response = maintenances.stream()
                 .map(maintenance -> modelMapperService.forDto().map(maintenance, ListMaintenanceDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListMaintenanceDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
 
@@ -72,7 +73,7 @@ public class MaintenanceManager implements MaintenanceService {
                         .map(maintenance, ListMaintenanceDto.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<ListMaintenanceDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override

@@ -31,5 +31,4 @@ public class CreditCard {
 
     @Column(name = "expirationDate")
     private String expirationDate;
-
 }

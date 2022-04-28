@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface DamageDao extends JpaRepository<Damage, Integer> {
     List<Damage> getByCarId(int id);
-
 }

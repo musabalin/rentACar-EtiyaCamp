@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "maintenances")
 public class Maintenance {
+
     @Id
     @Column(name = "maintenanceId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,4 @@ public class Maintenance {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
-
-
-
 }

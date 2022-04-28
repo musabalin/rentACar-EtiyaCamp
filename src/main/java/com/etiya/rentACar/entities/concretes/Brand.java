@@ -14,10 +14,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "brands")
 public class Brand {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "brandId")
     private int id;
+
     @Column(name = "name")
     private String name;
 

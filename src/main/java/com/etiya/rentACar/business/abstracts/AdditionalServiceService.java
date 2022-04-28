@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface AdditionalServiceService {
 
-
     DataResult<AdditionalServiceDto> getById(int id);
 
     DataResult<List<AdditionalServiceDto>> getAll();

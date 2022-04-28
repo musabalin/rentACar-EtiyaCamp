@@ -36,23 +36,26 @@ public class DamageManager implements DamageService {
     @Override
     public CarDamageDto getById(int id) {
         Damage result = damageDao.getById(id);
-        CarDamageDto response = modelMapperService.forRequest().map(result, CarDamageDto.class);
-        return response;
+
+        return modelMapperService.forRequest().map(result, CarDamageDto.class);
     }
 
     @Override
     public Result add(CreateDamageRequest createDamageRequest) {
         Damage damage = modelMapperService.forRequest()
                 .map(createDamageRequest, Damage.class);
-        damageDao.save(damage);
-        return new SuccessResult();
 
+        damageDao.save(damage);
+
+        return new SuccessResult();
     }
 
     @Override
     public Result update(UpdateDamageRequest updateCarDamageRequest) {
         Damage newDamage = modelMapperService.forRequest().map(updateCarDamageRequest, Damage.class);
+
         damageDao.save(newDamage);
+
         return new SuccessResult();
     }
 
@@ -68,22 +71,17 @@ public class DamageManager implements DamageService {
         List<ListDamageDto> response = damages.stream()
                 .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListDamageDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override
     public DataResult<List<ListDamageDto>> getByCarId(int id) {
-       /* List<Damage> damages = damageDao.findAll();
-        List<ListDamageDto> response = damages.stream()
-                .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
-                .filter(listDamageDto -> listDamageDto.getCarId()==id)
-                .collect(Collectors.toList());
-        */
+
         List<Damage> damages = this.damageDao.getByCarId(id);
         List<ListDamageDto> response = damages.stream().map(damage -> this.modelMapperService.forDto()
                         .map(damage, ListDamageDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListDamageDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override
@@ -93,7 +91,7 @@ public class DamageManager implements DamageService {
         List<ListDamageDto> response = damages.stream()
                 .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListDamageDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override
@@ -103,6 +101,6 @@ public class DamageManager implements DamageService {
         List<ListDamageDto> response = damages.stream()
                 .map(damage -> modelMapperService.forDto().map(damage, ListDamageDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListDamageDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 }

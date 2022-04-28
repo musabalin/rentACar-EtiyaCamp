@@ -27,6 +27,4 @@ public interface DamageService {
     DataResult<  List<ListDamageDto> >getAllPaged(int pageNo, int pageSize);
 
     DataResult<List<ListDamageDto>> getAllSorted(String option, String field);
-
-
 }

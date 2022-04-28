@@ -55,7 +55,4 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
-
-
-
 }

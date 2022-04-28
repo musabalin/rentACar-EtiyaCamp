@@ -12,6 +12,4 @@ public interface BrandService {
     Result add(CreateBrandRequest createBrandRequest);
 
     DataResult<List<ListBrandDto>> getAll();
-
-
 }

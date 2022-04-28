@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class CustomerManager implements CustomerService {
 
     private CustomerDao customerDao;
+
     private ModelMapperService modelMapperService;
 
     public CustomerManager(CustomerDao customerDao, ModelMapperService modelMapperService) {
@@ -25,6 +26,7 @@ public class CustomerManager implements CustomerService {
     @Override
     public Result add(CreateCustomerRequest createCustomerRequest) {
         Customer customer = modelMapperService.forRequest().map(createCustomerRequest, Customer.class);
+
         customerDao.save(customer);
 
         return new SuccessResult();

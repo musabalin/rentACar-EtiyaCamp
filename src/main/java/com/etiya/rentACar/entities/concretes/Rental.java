@@ -59,5 +59,4 @@ public class Rental {
 
     @OneToOne(mappedBy = "rental")
     private  Payment payment;
-
 }

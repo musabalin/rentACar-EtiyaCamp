@@ -18,7 +18,6 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-
     @PostMapping("/add")
     public void add(@RequestBody CreatePaymentRequest createPaymentRequest){
         paymentService.add(createPaymentRequest);

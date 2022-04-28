@@ -1,6 +1,5 @@
 package com.etiya.rentACar.business.concretes;
 
-import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.abstracts.CityService;
 import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.cityRequests.CreateCityRequest;
@@ -25,7 +24,7 @@ public class CityManager implements CityService {
     private CityDao cityDao;
     private ModelMapperService modelMapperService;
 
-    public CityManager(CityDao cityDao, ModelMapperService modelMapperService, CarService carService) {
+    public CityManager(CityDao cityDao, ModelMapperService modelMapperService) {
         this.cityDao = cityDao;
         this.modelMapperService = modelMapperService;
     }
@@ -57,6 +56,6 @@ public class CityManager implements CityService {
         List<ListCityDto> response = result.stream()
                 .map(city -> modelMapperService.forDto().map(city, ListCityDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListCityDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 }

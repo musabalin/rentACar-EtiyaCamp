@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Color {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "colorId")
@@ -23,5 +24,4 @@ public class Color {
 
     @OneToMany(mappedBy = "color")
     private List<Car> cars;
-
 }

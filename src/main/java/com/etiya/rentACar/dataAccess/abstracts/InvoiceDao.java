@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface InvoiceDao extends JpaRepository<Invoice, Integer> {
-
     List<Invoice> getByCustomerId(int customerId);
 
     List<Invoice> findByCreateDateBetween(LocalDate startDate, LocalDate endDate);

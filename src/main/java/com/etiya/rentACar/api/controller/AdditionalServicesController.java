@@ -13,14 +13,14 @@ import java.util.List;
 @RequestMapping("/api/additionalservices")
 public class AdditionalServicesController {
 
-   private AdditionalServiceService additionalService;
+    private AdditionalServiceService additionalService;
 
     public AdditionalServicesController(AdditionalServiceService additionalService) {
         this.additionalService = additionalService;
     }
 
     @GetMapping("/getall")
-    public DataResult<List<AdditionalServiceDto>> getAll(){
+    public DataResult<List<AdditionalServiceDto>> getAll() {
         return additionalService.getAll();
     }
 }

@@ -35,8 +35,6 @@ public class DamagesController {
     @PutMapping("/update")
     public Result update(@RequestBody UpdateDamageRequest updateCarDamageRequest) {
         return carDamageService.update(updateCarDamageRequest);
-
-
     }
 
     @GetMapping("/getall")

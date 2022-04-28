@@ -8,7 +8,6 @@ import com.etiya.rentACar.core.utilities.results.Result;
 import java.util.List;
 
 public interface PaymentService {
-
     Result add(CreatePaymentRequest createPaymentRequest);
 
     DataResult<List<ListPaymentDto>> getAll();

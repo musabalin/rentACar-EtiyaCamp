@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateBrandRequest {
-
-
     @NotNull
     @Length(min=2)
     private String name;

@@ -16,12 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cars")
 public class CarsController {
+
     private CarService carService;
 
     public CarsController(CarService carService) {
         this.carService = carService;
     }
-
 
     @PostMapping("/add")
     public Result add(@RequestBody @Valid CreateCarRequest carRequest) {
@@ -43,26 +43,20 @@ public class CarsController {
         return this.carService.getAllStatus(carStates);
     }
 
-
     @GetMapping("/getbymodelyear")
-    // @GetMapping("/getmodelyear/{id}")
     public DataResult<List<ListCarDto>> getByModelYear(@RequestParam("modelYear") short modelYear) {
-        //  public List<ListCarDto> getByModelYear ( short modelYear){
         return carService.getByModelYear(modelYear);
     }
 
     @GetMapping("/getbycityid")
     public DataResult<List<ListCarDto>> getByCityId(@RequestParam("cityId") int id) {
-
         return carService.getByCityId(id);
     }
-
 
     @PutMapping("/update")
     public Result Update(@RequestBody UpdateCarRequest updateCarRequest) {
         return carService.update(updateCarRequest);
     }
-
 
     @GetMapping("/getallpaged")
     public DataResult<List<ListCarDto>> getAllPaged(@RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
@@ -73,6 +67,5 @@ public class CarsController {
     public DataResult<List<ListCarDto>> getAllSorted() {
         return this.carService.getAllSorted();
     }
-
 
 }

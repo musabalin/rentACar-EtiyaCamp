@@ -41,24 +41,23 @@ public class CarManager implements CarService {
 
         Car car = modelMapperService.forRequest().map(createCarRequest, Car.class);
         this.carDao.save(car);
-        return new SuccessResult(BusinessMessages.Car.CAR_ADD);
+        return new SuccessResult(BusinessMessages.CarMessages.CAR_ADD);
 
     }
 
     @Override
     public Result update(UpdateCarRequest carRequest) {
 
-
         Car car = this.modelMapperService.forRequest().map(carRequest, Car.class);
         this.carDao.save(car);
-        return new SuccessResult(BusinessMessages.Car.CAR_UPDATE);
+        return new SuccessResult(BusinessMessages.CarMessages.CAR_UPDATE);
 
     }
 
     @Override
     public Result delete(DeleteCarRequest carRequest) {
         this.carDao.deleteById(carRequest.getId());
-        return new SuccessResult(BusinessMessages.Car.CAR_REMOVE);
+        return new SuccessResult(BusinessMessages.CarMessages.CAR_REMOVE);
     }
 
     @Override

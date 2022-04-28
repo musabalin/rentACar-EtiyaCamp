@@ -60,13 +60,11 @@ public class PaymentManager implements PaymentService {
 
 
     @Override
-    @Transactional
+    @Transactional()
     public Result add(CreatePaymentRequest createPaymentRequest) {
-
         checkCreditCard(createPaymentRequest);
 
         Payment result = modelMapperService.forRequest().map(createPaymentRequest, Payment.class);
-
         //Araç ekleme
         Rental rental = rentalService.add(createPaymentRequest.getCreateRentalRequest()).getData();
         //Ek hizmetler ekleme
@@ -79,49 +77,56 @@ public class PaymentManager implements PaymentService {
         result.setRental(rental);
 
         paymentDao.save(result);
-        return new SuccessResult(BusinessMessages.PaymentRequest.PAYMENT_ADD);
+        return new SuccessResult(BusinessMessages.PaymentMessages.PAYMENT_ADD);
     }
 
     @Override
     public DataResult<List<ListPaymentDto>> getAll() {
         List<Payment> result = paymentDao.findAll();
-        List<ListPaymentDto> response = result.stream()
-                .map(payment -> modelMapperService.forDto().map(payment, ListPaymentDto.class))
-                .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<ListPaymentDto>>(response);
+        List<ListPaymentDto> response = result.stream()
+                .map(payment -> modelMapperService.forDto()
+                        .map(payment, ListPaymentDto.class))
+                .collect(Collectors.toList());
+        return new SuccessDataResult<>(response);
     }
 
     private double calculateTotalPrice(CreatePaymentRequest createPaymentRequest) {
 
         double totalPrice = 0;
+
         Period day = Period.between(createPaymentRequest.getCreateRentalRequest().getDateAdded(),
                 createPaymentRequest.getCreateRentalRequest().getDateReturned());
+
         int daysCount = day.getDays();
+
         if (!Objects.equals(createPaymentRequest.getCreateRentalRequest().getReturnCityId(),
                 createPaymentRequest.getCreateRentalRequest().getRentCityId())) {
             totalPrice += 750;
         }
 
-        List<Integer> AdditionalServicesId = createPaymentRequest.getCreateAdditionalServiceOrderRequest()
-                .stream().map(CreateAdditionalServiceOrderRequest::getAdditionalServiceId)
+        List<Integer> additionalServicesId = createPaymentRequest.getCreateAdditionalServiceOrderRequest()
+                .stream()
+                .map(CreateAdditionalServiceOrderRequest::getAdditionalServiceId)
                 .collect(Collectors.toList());
-        for (Integer serviceId : AdditionalServicesId) {
+
+        for (Integer serviceId : additionalServicesId) {
             totalPrice += additionalServiceService.getById(serviceId).getData().getAdditionalServicePrice() * daysCount;
         }
-
 
         totalPrice += createPaymentRequest.getCreateRentalRequest().getDailyPrice() * daysCount;
 
         return totalPrice;
-
     }
 
     private void checkCreditCard(CreatePaymentRequest createPaymentRequest) {
+
         CreditCard creditCard = new CreditCard();
+
         creditCard.setCreditCardNumber(createPaymentRequest.getCreditCardNo());
         creditCard.setExpirationDate(createPaymentRequest.getExpirationDate());
         creditCard.setCvv(createPaymentRequest.getCvv());
+
         if (!posService.makePayment(creditCard)) {
             throw new BusinessException("Kart geçersiz");
         }
@@ -129,9 +134,7 @@ public class PaymentManager implements PaymentService {
 
     private Invoice addInvoice(CreatePaymentRequest invoiceRequest, int rentalId) {
 
-
-        var invoice = new CreateInvoicesRequest();
-        invoice = modelMapperService.forRequest().map(invoiceRequest.getCreateInvoicesRequest(), CreateInvoicesRequest.class);
+        var invoice = modelMapperService.forRequest().map(invoiceRequest.getCreateInvoicesRequest(), CreateInvoicesRequest.class);
         invoice.setTotalPrice(calculateTotalPrice(invoiceRequest));
         invoice.setRentalId(rentalId);
         return invoiceService.add(invoice).getData();
@@ -140,12 +143,18 @@ public class PaymentManager implements PaymentService {
 
     private void addAdditionalServiceOrder(CreatePaymentRequest createPaymentRequest, int rentalId) {
 
-        for (CreateAdditionalServiceOrderRequest additionalServiceOrderRequest :
+        createPaymentRequest.getCreateAdditionalServiceOrderRequest()
+                .stream()
+                .forEach(createAdditionalServiceOrderRequest -> {
+                            createAdditionalServiceOrderRequest.setRentalId(rentalId);
+                            additionalServiceOrderService.add(createAdditionalServiceOrderRequest);
+                        }
+                );
+
+     /*for (CreateAdditionalServiceOrderRequest additionalServiceOrderRequest :
                 createPaymentRequest.getCreateAdditionalServiceOrderRequest()) {
             additionalServiceOrderRequest.setRentalId(rentalId);
             additionalServiceOrderService.add(additionalServiceOrderRequest);
-        }
-
+        }*/
     }
-
 }

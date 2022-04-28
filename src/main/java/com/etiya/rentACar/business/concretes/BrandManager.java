@@ -4,6 +4,7 @@ import com.etiya.rentACar.business.abstracts.BrandService;
 import com.etiya.rentACar.business.constants.messages.BusinessMessages;
 import com.etiya.rentACar.business.requests.brandRequests.CreateBrandRequest;
 import com.etiya.rentACar.business.responses.brandResponses.ListBrandDto;
+import com.etiya.rentACar.core.crossCuttingConserns.exceptionHandling.BusinessException;
 import com.etiya.rentACar.core.utilities.modelMapperService.ModelMapperService;
 import com.etiya.rentACar.core.utilities.results.DataResult;
 import com.etiya.rentACar.core.utilities.results.Result;
@@ -24,21 +25,24 @@ public class BrandManager implements BrandService {
 
 
     public BrandManager(BrandDao brandDao, ModelMapperService modelMapperService) {
-
         this.brandDao = brandDao;
         this.modelMapperService = modelMapperService;
     }
 
-
     @Override
     public Result add(CreateBrandRequest createBrandRequest) {
 
+        try {
+            checkIfIsBrandName(createBrandRequest.getName());
 
-        checkIfIsBrandName(createBrandRequest.getName());
-        Brand brand = modelMapperService.forRequest()
-                .map(createBrandRequest, Brand.class);
-        this.brandDao.save(brand);
-        return new SuccessResult(BusinessMessages.BrandMessages.BRAND_ADD);
+            Brand brand = modelMapperService.forRequest()
+                    .map(createBrandRequest, Brand.class);
+            this.brandDao.save(brand);
+
+            return new SuccessResult(BusinessMessages.BrandMessages.BRAND_ADD);
+        } catch (Exception e) {
+            throw new BusinessException(BusinessMessages.BrandMessages.BRAND_DIDNT_ADD);
+        }
     }
 
 
@@ -49,16 +53,13 @@ public class BrandManager implements BrandService {
         List<ListBrandDto> response = brands.stream()
                 .map(brand -> modelMapperService.forDto().map(brand, ListBrandDto.class))
                 .collect(Collectors.toList());
-        return new SuccessDataResult<List<ListBrandDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     private void checkIfIsBrandName(String brandName) {
-
-        if (this.brandDao.existsBrandByNameIgnoreCase(brandName)) {
+        boolean check = this.brandDao.existsBrandByNameIgnoreCase(brandName);
+        if (check) {
             throw new RuntimeException(BusinessMessages.BrandMessages.BRAND_IS_ALREADY_EXISTS);
         }
-
     }
-
-
 }

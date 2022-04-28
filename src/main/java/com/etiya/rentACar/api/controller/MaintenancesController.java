@@ -15,17 +15,14 @@ import java.util.List;
 @RequestMapping("/api/maintenances")
 public class MaintenancesController {
 
-
     MaintenanceService maintenanceService;
 
     public MaintenancesController(MaintenanceService maintenanceService) {
         this.maintenanceService = maintenanceService;
     }
 
-
     @PostMapping("/add")
     public Result add(@RequestBody CreateMaintenanceRequest createMaintenanceRequest) {
-
         return maintenanceService.add(createMaintenanceRequest);
     }
 
@@ -38,7 +35,6 @@ public class MaintenancesController {
     public void getByCarId(@RequestParam int id) {
         maintenanceService.getByCarId(id);
     }*/
-
     @GetMapping("/getbycarid/{id}")
     public DataResult<List<ListMaintenanceDto>> getCarById(int id) {
         return this.maintenanceService.getByCarId(id);

@@ -20,6 +20,4 @@ public interface MaintenanceService {
     DataResult<List<ListMaintenanceDto>> getAll();
 
     DataResult<List<ListMaintenanceDto>> getByCarId(int id);
-
-
 }

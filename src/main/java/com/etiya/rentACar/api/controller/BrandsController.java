@@ -15,10 +15,9 @@ import java.util.List;
 @RequestMapping("/api/brands")
 public class BrandsController {
 
+    @Autowired
     private BrandService brandService;
 
-
-    @Autowired
     public BrandsController(BrandService brandService) {
         this.brandService = brandService;
     }
@@ -26,12 +25,10 @@ public class BrandsController {
     @PostMapping("/add")
     public Result add(@RequestBody @Valid CreateBrandRequest createBrandRequest) {
         return this.brandService.add(createBrandRequest);
-
     }
 
     @GetMapping("/getall")
     public DataResult<List<ListBrandDto>> getAll() {
-
         return brandService.getAll();
     }
 

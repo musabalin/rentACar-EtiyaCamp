@@ -1,10 +1,8 @@
 package com.etiya.rentACar.business.concretes;
 
-import com.etiya.rentACar.business.abstracts.AdditionalServiceOrderService;
 import com.etiya.rentACar.business.abstracts.CarService;
 import com.etiya.rentACar.business.abstracts.RentalService;
 import com.etiya.rentACar.business.constants.messages.BusinessMessages;
-import com.etiya.rentACar.business.requests.additionalServiceOrderRequest.CreateAdditionalServiceOrderRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateCarCityRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateKilometerRequest;
 import com.etiya.rentACar.business.requests.carRequests.UpdateStatusRequest;
@@ -34,13 +32,13 @@ public class RentalManager implements RentalService {
     private RentalDao rentalDao;
     private ModelMapperService modelMapperService;
     private CarService carService;
-    private AdditionalServiceOrderService additionalServiceOrderService;
 
-    public RentalManager(RentalDao rentalDao, ModelMapperService modelMapperService, CarService carService, AdditionalServiceOrderService additionalServiceOrderService) {
+    public RentalManager(RentalDao rentalDao,
+                         ModelMapperService modelMapperService,
+                         CarService carService) {
         this.rentalDao = rentalDao;
         this.modelMapperService = modelMapperService;
         this.carService = carService;
-        this.additionalServiceOrderService = additionalServiceOrderService;
     }
 
     //Araç statü güncelleme
@@ -68,38 +66,25 @@ public class RentalManager implements RentalService {
         carService.updateCity(updateCarCityRequest);
     }
 
-    //Ek servislerin eklenmesi
-    private void addAdditionalServices(List<Integer> additionalServices, int rentalId) {
-        var additionalServiceOrder = new CreateAdditionalServiceOrderRequest();
-        for (int additionalServiceId : additionalServices) {
-            additionalServiceOrder.setAdditionalServiceId(additionalServiceId);
-            additionalServiceOrder.setRentalId(rentalId);
-            additionalServiceOrderService.add(additionalServiceOrder);
-        }
-    }
 
     @Override
     public DataResult<Rental> add(CreateRentalRequest createRentalRequest) {
 
-
         checkCarStatus(createRentalRequest.getCarId());
-        Rental rental = modelMapperService.forRequest().map(createRentalRequest, Rental.class);
 
+        Rental rental = modelMapperService.forRequest().map(createRentalRequest, Rental.class);
 
         CarDto car = carService.getById(createRentalRequest.getCarId());
 
         rental.setBeforeRentalKilometer(car.getKilometer());
-        rentalDao.save(rental);
-        //Ek hizmetlerin eklenmesi
 
-        // addAdditionalServices(createRentalRequest.getAdditionalService(), rental.getId());
+        rentalDao.save(rental);
         //Şehir Güncelleme
         UpdateCarCity(createRentalRequest.getCarId(), createRentalRequest.getReturnCityId());
         //Statü güncelleme
         updateCarState(createRentalRequest.getCarId(), CarStates.Rented);
 
-
-        return new SuccessDataResult<Rental>(rental, BusinessMessages.RentalMessages.RENTAL_RENTED);
+        return new SuccessDataResult<>(rental, BusinessMessages.RentalMessages.RENTAL_RENTED);
     }
 
     private void checkCarStatus(int id) {
@@ -143,9 +128,7 @@ public class RentalManager implements RentalService {
         List<ListRentalDto> response = result.stream()
                 .map(rental -> modelMapperService.forDto().map(rental, ListRentalDto.class))
                 .collect(Collectors.toList());
-
-
-        return new SuccessDataResult<List<ListRentalDto>>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override
